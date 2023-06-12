@@ -16,9 +16,9 @@ export default function Map({ targetLocation, displayedResources }) {
 	};
 	const initialRegion = {
 		latitude: 50.82906244129774,
-		latitudeDelta: 0.0712773011969503,
+		latitudeDelta: 0.01512773011969503,
 		longitude: -0.15489586013351736,
-		longitudeDelta: 0.07019293563021733,
+		longitudeDelta: 0.015019293563021733,
 	};
 
 	return (

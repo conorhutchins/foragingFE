@@ -9,7 +9,6 @@ export default function Welcome ({ navigation }){
 
 
     const handleSubmit = (values) => {
-          console.log(values.username);
           setUser(values.username)
           navigation.navigate('MapPage')
         };

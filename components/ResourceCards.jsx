@@ -1,7 +1,8 @@
 import {
 	View,
 	FlatList,
-	Text
+	Text,
+	Button
 } from "react-native";
 
 export default function ResourceCards({
@@ -10,20 +11,22 @@ export default function ResourceCards({
 	resources,
 }) {
 	const renderItem = ({ item }) => {
+		
+		
 		return (
 			<View
-				onTouchEnd={/*cardPress(item.location)*/ console.log("new ctouch end" ) }
 				style={{
 					width: 200,
 					height: 200,
 					backgroundColor: "lightgray",
 					margin: 10,
 				}}
-				ont
+				onPress={()=>{console.log("onTouchEnd")}}
 			>
 				<Text>{item.resource_name}</Text>
 				<Text>{item.description}</Text>
 				<Text>{item.created_at}</Text>
+				<Button onPress={()=>{cardPress(item.location)}} title="Button"/> 
 			</View>
 		);
 	};

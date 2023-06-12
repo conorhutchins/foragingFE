@@ -23,16 +23,8 @@ export default function MapPage() {
 		};
 	}, []);
 
-	//   const onRegionChange = (region) => {
-	//     console.log(region);
-	//   };
-
 	const cardPress = (location) => {
-    // if (!isScrolling) {
-    //   setTargetlocation(location)
-    // }
     setTargetlocation(location)
-
   };
 
 	return (
