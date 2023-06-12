@@ -4,7 +4,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Welcome from "./pages/Welcome";
-import Map from "./pages/Map";
+import MapPage from "./pages/MapPage";
 import { UserContext } from "./contexts/UserContext";
 import { useState, useEffect } from "react";
 
@@ -18,16 +18,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <UserContext.Provider value={{ user, setUser }}>
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator initialRouteName="Welcome"
+        screenOptions={{headerShown:false}}
+        >
           <Stack.Screen
             name="Welcome"
             component={Welcome}
-            options={{ title: "Foraging App" }}
           />
            <Stack.Screen
-            name="Map"
-            component={Map}
-            options={{ title: "Foraging App" }}
+            name="MapPage"
+            component={MapPage}
+            options={{ title: null}}
           />
         </Stack.Navigator>
       </UserContext.Provider>
