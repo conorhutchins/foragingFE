@@ -1,10 +1,10 @@
+import React from "react";
 import { View, FlatList, Text, Button } from "react-native";
 
-export default function ResourceCards({
-  setIsScrolling,
-  cardPress,
-  resources,
-}) {
+export default function ResourceCards({ cardPress, resources, navigation }) {
+  const viewResourceButtonPress = (resource) => {
+    navigation.navigate("ResourcePage", { resource: resource });
+  };
   const renderItem = ({ item }) => {
     return (
       <View
@@ -22,25 +22,20 @@ export default function ResourceCards({
           onPress={() => {
             cardPress(item.location);
           }}
-          title="Button"
+          title="Show on map"
+        />
+        <Button
+          onPress={() => {
+            viewResourceButtonPress(item);
+          }}
+          title="View resource"
         />
       </View>
     );
   };
 
-  const handleScrollBegin = () => {
-    setIsScrolling(true);
-  };
-
-  const handleScrollEnd = () => {
-    setIsScrolling(false);
-  };
-
   return (
     <FlatList
-      onScrollBeginDrag={handleScrollBegin}
-      onScrollEndDrag={handleScrollEnd}
-      scrollEventThrottle={16}
       data={resources}
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}

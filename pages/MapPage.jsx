@@ -7,9 +7,8 @@ import Nav from "../components/Nav";
 import ResourceCards from "../components/ResourceCards";
 import { SearchBox } from "../components/SearchBox";
 
-export default function MapPage() {
+export default function MapPage({ navigation }) {
   const [displayedResources, setDisplayedResources] = useState([]);
-  const [isScrolling, setIsScrolling] = useState(false);
   const [targetLocation, setTargetlocation] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
 
@@ -40,9 +39,9 @@ export default function MapPage() {
         <SearchBox setShowSearch={setShowSearch} />
       ) : (
         <ResourceCards
-          setIsScrolling={setIsScrolling}
           resources={displayedResources}
           cardPress={cardPress}
+          navigation={navigation}
         />
       )}
     </View>

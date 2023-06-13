@@ -12,6 +12,8 @@ export const fetchItems = (params) => {
       username: "Chris",
       created_at: "12/06/2023",
       description: "a lovely bunch of raspberries",
+      img_url:
+        "https://images.pexels.com/photos/479454/pexels-photo-479454.jpeg",
     },
     {
       resource_id: "2",
@@ -66,5 +68,73 @@ export const fetchItems = (params) => {
       description: "a lovely bunch of blueberries",
     },
   ];
+
   return items;
+};
+
+export const fetchCommentsByResourceId = (resource_id) => {
+
+  const comments = [
+    {
+      resource_id: 1,
+      comment_id: 1,
+      username: "James",
+      created_at: "13/06/2023",
+      body: "comment 1",
+    },
+    {
+      resource_id: 1,
+      comment_id: 2,
+      username: "Andrii",
+      created_at: "13/05/2023",
+      body: "comment 2",
+    },
+    {
+      resource_id: 2,
+      comment_id: 1,
+      username: "Jack",
+      created_at: "13/04/2023",
+      body: "comment 3",
+    },
+    {
+      resource_id: 2,
+      comment_id: 2,
+      username: "Sarah",
+      created_at: "13/03/2023",
+      body: "comment 4",
+    },
+    {
+      resource_id: 3,
+      comment_id: 1,
+      username: "Chris",
+      created_at: "13/02/2023",
+      body: "comment 5",
+    },
+    {
+      resource_id: 4,
+      comment_id: 1,
+      username: "Conor",
+      created_at: "13/01/2023",
+      body: "comment 6",
+    },
+    {
+      resource_id: 4,
+      comment_id: 2,
+      username: "James",
+      created_at: "13/12/2022",
+      body: "comment 7",
+    },
+  ];
+
+  return comments;
+};
+
+export const postComment = (resource_id, body, username) => {
+  const newComment = {
+    resource_id,
+    body,
+    username,
+  };
+
+  console.log(newComment);
 };
