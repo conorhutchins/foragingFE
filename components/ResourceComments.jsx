@@ -14,10 +14,12 @@ import { UserContext } from "../contexts/UserContext";
 export default function ResourceComments({ resource_id }) {
   const [comments, setComments] = useState(null);
   const { user } = useContext(UserContext);
+  const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
-    const comments = fetchCommentsByResourceId(resource_id);
-    setComments(comments);
+    fetchCommentsByResourceId(resource_id).then((comments) => {
+      setComments(comments);
+    });
   }, []);
   const renderItem = ({ item }) => {
     return (
@@ -38,7 +40,16 @@ export default function ResourceComments({ resource_id }) {
     setComments((currentComments) => {
       return [optimisticComment, ...currentComments];
     });
-    postComment(resource_id, values.commentBody, user);
+    postComment(resource_id, values.commentBody, user).catch(() => {
+      setComments((currentComments) => {
+        const temporaryComments = [...currentComments];
+        temporaryComments.shift();
+        setSubmitError(
+          "Sorry, comment not submitted. /n Please check your connection,  and/or refresh your app and try again!"
+        );
+        return temporaryComments;
+      });
+    });
   };
 
   return (
@@ -57,6 +68,7 @@ export default function ResourceComments({ resource_id }) {
           </>
         )}
       </Formik>
+      {submitError && <Text>{submitError}</Text>}
       <FlatList
         data={comments}
         renderItem={renderItem}

@@ -69,11 +69,10 @@ export const fetchItems = (params) => {
     },
   ];
 
-  return items;
+  return Promise.resolve(items);
 };
 
 export const fetchCommentsByResourceId = (resource_id) => {
-
   const comments = [
     {
       resource_id: 1,
@@ -126,7 +125,7 @@ export const fetchCommentsByResourceId = (resource_id) => {
     },
   ];
 
-  return comments;
+  return Promise.resolve(comments);
 };
 
 export const postComment = (resource_id, body, username) => {

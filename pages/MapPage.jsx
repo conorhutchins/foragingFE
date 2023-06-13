@@ -16,12 +16,9 @@ export default function MapPage({ navigation }) {
     StatusBar.setHidden(true);
     StatusBar.setBarStyle("light-content");
 
-    const items = fetchItems();
-    setDisplayedResources(items);
-    return () => {
-      StatusBar.setHidden(false);
-      StatusBar.setBarStyle("default");
-    };
+    fetchItems().then((items) => {
+      setDisplayedResources(items);
+    });
   }, []);
 
   const cardPress = (location) => {
