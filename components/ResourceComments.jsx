@@ -21,14 +21,7 @@ export default function ResourceComments({ resource_id }) {
   }, []);
   const renderItem = ({ item }) => {
     return (
-      <View
-        style={{
-          width: 200,
-          height: 200,
-          backgroundColor: "lightgray",
-          margin: 10,
-        }}
-      >
+      <View style={styles.comment}>
         <Text>{item.username}</Text>
         <Text>{item.body}</Text>
         <Text>{item.created_at}</Text>
@@ -37,11 +30,19 @@ export default function ResourceComments({ resource_id }) {
   };
 
   const handleSubmit = (values) => {
+    const optimisticComment = {
+      body: values.commentBody,
+      username: user,
+      created_at: Date(),
+    };
+    setComments((currentComments) => {
+      return [optimisticComment, ...currentComments];
+    });
     postComment(resource_id, values.commentBody, user);
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Formik initialValues={{ commentBody: "" }} onSubmit={handleSubmit}>
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <>
@@ -60,15 +61,31 @@ export default function ResourceComments({ resource_id }) {
         data={comments}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
+        vertical
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: "95%",
+    height: 200,
+    margin: 10,
+  },
+  comment: {
+    flexDirection: "column",
+    width: "95%",
+    height: 200,
+    backgroundColor: "lightgray",
+    margin: 10,
+    borderRadius: 20,
+    padding: 15,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
   input: {
     height: 40,
-    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 16,
     paddingHorizontal: 8,

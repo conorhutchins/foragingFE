@@ -25,7 +25,6 @@ export const ResourcePage = ({ route }) => {
       </View>
       <Nav showSearchButton={false} showResourceNav={true} />
       <View>
-        <Text>test text</Text>
         <ResourceComments resource_id={resource.resource_id} />
       </View>
     </View>
