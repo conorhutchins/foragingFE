@@ -1,4 +1,4 @@
-export const fetchItems = () => {
+export const fetchItems = (params) => {
   const items = [
     {
       resource_id: "1",
@@ -23,7 +23,7 @@ export const fetchItems = () => {
       condition: 90,
       depletion: 10,
       username: "Chris",
-      created_at: "12/06/2023",
+      created_at: "12/05/2023",
       description: "a lovely bunch of blueberries",
     },
     {
@@ -36,7 +36,7 @@ export const fetchItems = () => {
       condition: 90,
       depletion: 10,
       username: "Chris",
-      created_at: "12/06/2023",
+      created_at: "12/04/2023",
       description: "a lovely bunch of blueberries",
     },
     {
@@ -49,7 +49,7 @@ export const fetchItems = () => {
       condition: 90,
       depletion: 10,
       username: "Chris",
-      created_at: "12/06/2023",
+      created_at: "12/03/2023",
       description: "a lovely bunch of blueberries",
     },
     {
@@ -62,7 +62,7 @@ export const fetchItems = () => {
       condition: 90,
       depletion: 10,
       username: "Chris",
-      created_at: "12/06/2023",
+      created_at: "12/02/2023",
       description: "a lovely bunch of blueberries",
     },
   ];
