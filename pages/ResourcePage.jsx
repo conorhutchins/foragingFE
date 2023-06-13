@@ -4,7 +4,7 @@ import { Image } from "expo-image";
 import Nav from "../components/Nav";
 import ResourceComments from "../components/ResourceComments";
 
-export const ResourcePage = ({ route }) => {
+export const ResourcePage = ({ navigation, route }) => {
   const { resource } = route.params;
 
   return (
@@ -23,7 +23,11 @@ export const ResourcePage = ({ route }) => {
           transition={1000}
         />
       </View>
-      <Nav showSearchButton={false} showResourceNav={true} />
+      <Nav
+        showSearchButton={false}
+        showResourceNav={true}
+        navigation={navigation}
+      />
       <View>
         <ResourceComments resource_id={resource.resource_id} />
       </View>

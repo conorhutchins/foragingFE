@@ -1,24 +1,25 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, StatusBar } from "react-native";
 import { fetchItems } from "../utils/utils";
 import Map from "../components/Map";
 import Nav from "../components/Nav";
 import ResourceCards from "../components/ResourceCards";
 import { SearchBox } from "../components/SearchBox";
+import { ResourcesContext } from "../contexts/ResourcesContext";
 
 export default function MapPage({ navigation }) {
-  const [displayedResources, setDisplayedResources] = useState([]);
   const [targetLocation, setTargetlocation] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
+  const { displayedResources, setDisplayedResources } =
+    useContext(ResourcesContext);
 
   useEffect(() => {
-    StatusBar.setHidden(true);
-    StatusBar.setBarStyle("light-content");
-
-    fetchItems().then((items) => {
-      setDisplayedResources(items);
-    });
+    if (!displayedResources) {
+      fetchItems().then((items) => {
+        setDisplayedResources(items);
+      });
+    }
   }, []);
 
   const cardPress = (location) => {

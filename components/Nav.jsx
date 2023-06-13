@@ -5,11 +5,16 @@ export default function Nav({
   setShowSearch,
   showResourceNav = false,
   showSearchButton = true,
+  navigation,
 }) {
   const [toggleValue, setToggleValue] = useState(false);
 
   const searchPress = () => {
     setShowSearch(true);
+  };
+
+  const backToMapPress = () => {
+    navigation.navigate("MapPage");
   };
   return (
     <View>
@@ -26,6 +31,14 @@ export default function Nav({
             title="search"
             color="#841584"
             accessibilityLabel="search"
+          />
+        )}
+        {!showSearchButton && (
+          <Button
+            onPress={backToMapPress}
+            title="back to map"
+            color="#841584"
+            accessibilityLabel="back to map"
           />
         )}
         <Button title="Add" color="#841584" accessibilityLabel="Add" />

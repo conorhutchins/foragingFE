@@ -3,16 +3,18 @@ import { StyleSheet, View } from "react-native";
 
 export default function Map({ targetLocation, displayedResources }) {
   const showResources = () => {
-    return displayedResources.map((resource, index) => {
-      return (
-        <Marker
-          key={index}
-          coordinate={resource.location}
-          title={resource.resource_name}
-          description={resource.description}
-        />
-      );
-    });
+    if (displayedResources) {
+      return displayedResources.map((resource, index) => {
+        return (
+          <Marker
+            key={index}
+            coordinate={resource.location}
+            title={resource.resource_name}
+            description={resource.description}
+          />
+        );
+      });
+    }
   };
   const initialRegion = {
     latitude: 50.82906244129774,
@@ -23,7 +25,7 @@ export default function Map({ targetLocation, displayedResources }) {
 
   return (
     <MapView
-    //   onRegionChange={onRegionChange}
+      //   onRegionChange={onRegionChange}
       mapType="satellite"
       showsUserLocation={true}
       style={styles.map}

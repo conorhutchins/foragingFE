@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { fetchItems } from "../utils/utils";
 import { TextInput, Button, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
+import { ResourcesContext } from "../contexts/ResourcesContext";
 
 export const SearchBox = ({ setShowSearch }) => {
   const [sortValue, setSortValue] = useState("location");
+  const { setDisplayedResources } = useContext(ResourcesContext);
 
   const handleSubmit = (values) => {
     params = {
@@ -14,7 +16,9 @@ export const SearchBox = ({ setShowSearch }) => {
         search: values.searchTerm,
       },
     };
-    fetchItems(params);
+    fetchItems(params).then((items) => {
+      setDisplayedResources(items);
+    });
     setShowSearch(false);
   };
 
