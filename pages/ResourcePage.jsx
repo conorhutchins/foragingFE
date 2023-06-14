@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Image } from "expo-image";
 import Nav from "../components/Nav";
@@ -27,6 +27,7 @@ export const ResourcePage = ({ navigation, route }) => {
         showSearchButton={false}
         showResourceNav={true}
         navigation={navigation}
+        currentResource={resource}
       />
       <View>
         <ResourceComments resource_id={resource.resource_id} />

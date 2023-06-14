@@ -1,13 +1,32 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Button, View, StyleSheet, Switch } from "react-native";
+import { ResourcesContext } from "../contexts/ResourcesContext";
 
 export default function Nav({
   setShowSearch,
   showResourceNav = false,
   showSearchButton = true,
   navigation,
+  currentResource,
 }) {
   const [toggleValue, setToggleValue] = useState(false);
+  const { displayedResources, setDisplayedResources } =
+    useContext(ResourcesContext);
+  const [nextResource, setNextResource] = useState();
+  const [previousResource, setPreviousResource] = useState();
+
+  useEffect(() => {
+    if (displayedResources) {
+      const previousValue = displayedResources.find((element, index, array) => {
+        return currentResource === array[index + 1];
+      });
+      const nextValue = displayedResources.find((element, index, array) => {
+        return currentResource === array[index - 1];
+      });
+      setNextResource(nextValue);
+      setPreviousResource(previousValue);
+    }
+  }, [currentResource]);
 
   const searchPress = () => {
     setShowSearch(true);
@@ -16,12 +35,31 @@ export default function Nav({
   const backToMapPress = () => {
     navigation.navigate("MapPage");
   };
+
+  const previousResourcePress = () => {
+    navigation.navigate("ResourcePage", { resource: previousResource });
+  };
+
+  const nextResourcePress = () => {
+    navigation.navigate("ResourcePage", { resource: nextResource });
+  };
+
   return (
     <View>
       {showResourceNav && (
         <View style={styles.container}>
-          <Button title="Previous resource" />
-          <Button title="Next resource" />
+          <Button
+            title={
+              previousResource ? `PRV ${previousResource.resource_name}` : "PRV"
+            }
+            onPress={previousResourcePress}
+            disabled={!previousResource}
+          />
+          <Button
+            title={nextResource ? `NXT ${nextResource.resource_name}` : "NXT"}
+            onPress={nextResourcePress}
+            disabled={!nextResource}
+          />
         </View>
       )}
       <View style={styles.container}>
