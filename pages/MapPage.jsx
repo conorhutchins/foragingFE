@@ -32,7 +32,7 @@ export default function MapPage({ navigation }) {
         targetLocation={targetLocation}
         displayedResources={displayedResources}
       />
-      <Nav setShowSearch={setShowSearch} />
+      <Nav setShowSearch={setShowSearch} navigation={navigation} />
       {showSearch ? (
         <SearchBox setShowSearch={setShowSearch} />
       ) : (

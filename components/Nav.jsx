@@ -44,6 +44,10 @@ export default function Nav({
     navigation.navigate("ResourcePage", { resource: nextResource });
   };
 
+  const addPagePress = () => {
+    navigation.navigate("AddNewResource");
+  };
+
   return (
     <View>
       {showResourceNav && (
@@ -79,7 +83,12 @@ export default function Nav({
             accessibilityLabel="back to map"
           />
         )}
-        <Button title="Add" color="#841584" accessibilityLabel="Add" />
+        <Button
+          title="Add"
+          color="#841584"
+          accessibilityLabel="Add"
+          onPress={addPagePress}
+        />
         <Button
           title="catalogue"
           color="#841584"

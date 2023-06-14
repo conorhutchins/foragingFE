@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { ResourcePage } from "./pages/ResourcePage";
 import { ResourcesContext } from "./contexts/ResourcesContext";
 const Stack = createNativeStackNavigator();
+import { AddNewResource } from "./pages/AddNewResource";
 
 export default function App() {
   const [user, setUser] = useState("Chris");
@@ -34,6 +35,11 @@ export default function App() {
             <Stack.Screen
               name="ResourcePage"
               component={ResourcePage}
+              options={{ title: null }}
+            />
+            <Stack.Screen
+              name="AddNewResource"
+              component={AddNewResource}
               options={{ title: null }}
             />
           </Stack.Navigator>
