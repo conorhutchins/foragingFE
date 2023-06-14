@@ -2,10 +2,50 @@ import { Formik } from "formik";
 import { Image } from "expo-image";
 import { View, StyleSheet, Text, TextInput, Button } from "react-native";
 import Slider from "@react-native-community/slider";
+import { postResource } from "../utils/utils";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
 
-export const AddNewResource = () => {
-  const handleSubmit = () => {};
+export const AddNewResource = ({ route }) => {
+  const [submitError, setSubmitError] = useState(null)
+
   const abundanceValues = ["depleted", "low", "medium", "high", "abundant"];
+  const {image, location} = route.params
+
+  const{user: username} = useContext(UserContext)
+  
+
+
+
+  const handleSubmit = ({resource_name,
+    description,
+    condition,
+    depletion}) => {
+
+    const body = { 
+      resource_name,
+      description,
+      condition,
+      depletion,
+      username,
+      location:{
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      },
+      image,
+      created_at: new Date(location.timestamp).toUTCString()
+
+
+    }
+
+
+  
+    postResource(body).catch(()=>{
+      setSubmitError("Sorry resource was not submitted, please restart the app and try again!")
+
+    })
+  };
+
 
   return (
     <View style={styles.container}>
@@ -13,15 +53,15 @@ export const AddNewResource = () => {
         <Text>Add new resource</Text>
       </View>
       <View style={styles.imageContainer}>
-        <Text>Image goes here</Text>
+      <Image source={{ uri: image }} style={styles.image} />
       </View>
       <View style={styles.formContainer}>
         <Formik
           initialValues={{
-            resourceName: "",
-            resourceNotes: "",
-            qualityValue: 50,
-            abundanceValue: 3,
+            resource_name: "",
+            description: "",
+            condition: 50,
+            depletion: 3,
           }}
           onSubmit={handleSubmit}
         >
@@ -33,40 +73,43 @@ export const AddNewResource = () => {
             setFieldValue,
           }) => (
             <>
+            <Text>Name of Forageable resource</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Name"
-                onChangeText={handleChange("resourceName")}
-                value={values.resourceName}
+                onChangeText={handleChange("resource_name")}
+                value={values.resource_name}
               />
+              <Text>Notes about Forageable resource?</Text>
               <TextInput
-                style={styles.input}
+                style={styles.notes_input}
                 placeholder="Notes"
-                onChangeText={handleChange("resourceNotes")}
-                value={values.resourceNotes}
+                onChangeText={handleChange("description")}
+                value={values.description}
               />
-              <Text>Quality: {values.qualityValue}%</Text>
+              <Text>Quality: {values.condition}%</Text>
               <Slider
                 style={styles.slider}
-                value={values.qualityValue}
+                value={values.condition}
                 minimumValue={0}
                 maximumValue={100}
                 onValueChange={(value) => {
-                  setFieldValue("qualityValue", value);
+                  setFieldValue("condition", value);
                 }}
                 step={1}
               />
-              <Text>Abundance: {abundanceValues[values.abundanceValue]}</Text>
+              <Text>Abundance: {abundanceValues[values.depletion]}</Text>
               <Slider
                 style={styles.slider}
-                value={values.abundanceValue}
+                value={values.depletion}
                 minimumValue={0}
                 maximumValue={4}
                 onValueChange={(value) => {
-                  setFieldValue("abundanceValue", value);
+                  setFieldValue("depletion", value);
                 }}
                 step={1}
               />
+              {submitError && <Text style={styles.error} >{submitError}</Text>}
               <Button onPress={handleSubmit} title="Submit" />
             </>
           )}
@@ -87,6 +130,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 8,
   },
+  notes_input: {
+    height: 200,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+  },
   title: {
     alignItems: "center",
     flexDirection: "row",
@@ -101,10 +151,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
-    height: "50%",
+    height: "30%",
     backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
   },
   slider: { width: 200, height: 40 },
+  image: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+    backgroundColor: "#0553",
+    contentFit: "contain",
+  },
+  error: {
+color: '#f44336'
+  }
 });

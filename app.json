@@ -36,9 +36,9 @@
     },
     "plugins": [
       [
-        "expo-camera",
+        "expo-location",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ]
     ]

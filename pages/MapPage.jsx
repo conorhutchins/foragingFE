@@ -9,6 +9,7 @@ import { SearchBox } from "../components/SearchBox";
 import { ResourcesContext } from "../contexts/ResourcesContext";
 
 export default function MapPage({ navigation }) {
+  
   const [targetLocation, setTargetlocation] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
   const { displayedResources, setDisplayedResources } =

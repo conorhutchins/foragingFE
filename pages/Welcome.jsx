@@ -4,6 +4,7 @@ import { UserContext } from "../contexts/UserContext";
 import { Formik } from "formik";
 
 export default function Welcome({ navigation }) {
+  
   const { user, setUser } = useContext(UserContext);
 
   const handleSubmit = (values) => {

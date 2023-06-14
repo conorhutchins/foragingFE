@@ -253,3 +253,13 @@ export const postComment = (resource_id, body, username) => {
 
   console.log(newComment);
 };
+
+export const postResource = (body) => {
+if(body){
+  return Promise.resolve(console.log(body))
+
+}else {
+  return Promise.reject()
+}
+
+}

@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import ResourceComments from "../components/ResourceComments";
 
 export const ResourcePage = ({ navigation, route }) => {
+  
   const { resource } = route.params;
 
   return (
