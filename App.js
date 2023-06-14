@@ -1,16 +1,19 @@
+import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import Welcome from "./pages/Welcome";
 import MapPage from "./pages/MapPage";
 import { UserContext } from "./contexts/UserContext";
-import { useState, useEffect } from "react";
 import { ResourcePage } from "./pages/ResourcePage";
 import { ResourcesContext } from "./contexts/ResourcesContext";
-const Stack = createNativeStackNavigator();
 import { AddNewResource } from "./pages/AddNewResource";
+import { ImageCapturePage } from "./pages/ImageCapturePage";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState("Chris");
@@ -35,6 +38,11 @@ export default function App() {
             <Stack.Screen
               name="ResourcePage"
               component={ResourcePage}
+              options={{ title: null }}
+            />
+            <Stack.Screen
+              name="ImageCapturePage"
+              component={ImageCapturePage}
               options={{ title: null }}
             />
             <Stack.Screen

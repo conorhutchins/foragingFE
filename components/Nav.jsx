@@ -45,7 +45,7 @@ export default function Nav({
   };
 
   const addPagePress = () => {
-    navigation.navigate("AddNewResource");
+    navigation.navigate("ImageCapturePage");
   };
 
   return (
