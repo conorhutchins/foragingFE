@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { Button, View, StyleSheet, Switch } from "react-native";
+import { Button, View, StyleSheet, Switch, Text } from "react-native";
 import { ResourcesContext } from "../contexts/ResourcesContext";
 import { useRoute } from "@react-navigation/native";
 
@@ -81,9 +81,9 @@ export default function Nav({
         {!showSearchButton && (
           <Button
             onPress={backToMapPress}
-            title="Back to map"
+            title="Back To Map"
             color="#841584"
-            accessibilityLabel="back to map"
+            accessibilityLabel="Back To Map"
           />
         )}
         <Button
@@ -98,10 +98,13 @@ export default function Nav({
           accessibilityLabel="catalogue"
         />
        {route.name === "MapPage" && (
-          <Switch
-            value={toggleValue}
-            onValueChange={setToggleValue}
-          />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text>{toggleValue ? 'List' : 'Map'}</Text>
+            <Switch
+              value={toggleValue}
+              onValueChange={setToggleValue}
+            />
+          </View>
         )}
       </View>
     </View>
@@ -112,6 +115,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingHorizontal: 10, // optional, adds horizontal padding to buttons
+    paddingHorizontal: 10,
   },
 });

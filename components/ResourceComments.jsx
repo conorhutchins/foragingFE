@@ -64,7 +64,7 @@ export default function ResourceComments({ resource_id }) {
               // onBlur={handleBlur('username')}
               value={values.commentBody}
             />
-            <Button onPress={handleSubmit} title="Submit" />
+            <Button onPress={handleSubmit} title="Submit" disabled ={values.commentBody === ""} />
           </>
         )}
       </Formik>

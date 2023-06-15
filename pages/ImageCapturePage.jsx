@@ -31,7 +31,7 @@ export const ImageCapturePage = ({ navigation }) => {
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
-    text = "Location Found!";
+    text = "Location found, go ahead and add a image!";
   }
 
   const pickImage = async () => {

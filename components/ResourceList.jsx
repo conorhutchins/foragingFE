@@ -10,12 +10,14 @@ export default function ResourceList({ resources, navigation }) {
       <View
         style={{
           width: "100%",
-          height: "50%",
-          margin: 10,
+          height: 140,
+          margin: 5,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <Text>{item.resource_name}</Text>
-        <Text> Distance: </Text>
+        <Text style = {{fontSize: 20}}>{item.resource_name}</Text>
+        <Text style = {{fontSize: 20}}> Distance: </Text>
         <Button
           onPress={() => {
             viewResourceButtonPress(item);
