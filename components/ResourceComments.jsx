@@ -82,13 +82,13 @@ export default function ResourceComments({ resource_id }) {
 const styles = StyleSheet.create({
   container: {
     width: "95%",
-    height: 200,
+    height: 400,
     margin: 10,
   },
   comment: {
     flexDirection: "column",
     width: "95%",
-    height: 200,
+    height: 400,
     backgroundColor: "lightgray",
     margin: 10,
     borderRadius: 20,

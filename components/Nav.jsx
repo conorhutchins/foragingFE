@@ -60,7 +60,7 @@ export default function Nav({
             disabled={!previousResource}
           />
           <Button
-            title={nextResource ? `NXT ${nextResource.resource_name}` : "NXT"}
+            title={nextResource ? `${nextResource.resource_name} NXT` : "NXT"}
             onPress={nextResourcePress}
             disabled={!nextResource}
           />

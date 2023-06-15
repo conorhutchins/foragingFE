@@ -5,7 +5,7 @@ import Nav from "../components/Nav";
 import ResourceComments from "../components/ResourceComments";
 
 export const ResourcePage = ({ navigation, route }) => {
-  
+
   const { resource } = route.params;
 
   return (
@@ -30,7 +30,7 @@ export const ResourcePage = ({ navigation, route }) => {
         navigation={navigation}
         currentResource={resource}
       />
-      <View>
+      <View style={styles.comments}>
         <ResourceComments resource_id={resource.resource_id} />
       </View>
     </View>
@@ -57,4 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0553",
     resizeMode: "contain",
   },
+  comments:{
+    height: "100%"
+  }
 });
