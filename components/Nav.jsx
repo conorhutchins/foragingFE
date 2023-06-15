@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { Button, View, StyleSheet, Switch } from "react-native";
 import { ResourcesContext } from "../contexts/ResourcesContext";
+import { useRoute } from "@react-navigation/native";
 
 export default function Nav({
   setShowSearch,
@@ -8,8 +9,10 @@ export default function Nav({
   showSearchButton = true,
   navigation,
   currentResource,
+  toggleValue,
+  setToggleValue,
 }) {
-  const [toggleValue, setToggleValue] = useState(false);
+  const route = useRoute();
   const { displayedResources, setDisplayedResources } =
     useContext(ResourcesContext);
   const [nextResource, setNextResource] = useState();
@@ -70,7 +73,7 @@ export default function Nav({
         {showSearchButton && (
           <Button
             onPress={searchPress}
-            title="search"
+            title="Search"
             color="#841584"
             accessibilityLabel="search"
           />
@@ -78,7 +81,7 @@ export default function Nav({
         {!showSearchButton && (
           <Button
             onPress={backToMapPress}
-            title="back to map"
+            title="Back to map"
             color="#841584"
             accessibilityLabel="back to map"
           />
@@ -90,11 +93,16 @@ export default function Nav({
           onPress={addPagePress}
         />
         <Button
-          title="catalogue"
+          title="Catalogue"
           color="#841584"
           accessibilityLabel="catalogue"
         />
-        <Switch value={toggleValue} onValueChange={setToggleValue} />
+       {route.name === "MapPage" && (
+          <Switch
+            value={toggleValue}
+            onValueChange={setToggleValue}
+          />
+        )}
       </View>
     </View>
   );

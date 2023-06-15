@@ -4,6 +4,7 @@ import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { Camera, CameraType } from "expo-camera";
 import * as Location from 'expo-location';
+import BackButton from "../components/BackButton";
 
 export const ImageCapturePage = ({ navigation }) => {
 
@@ -56,7 +57,7 @@ export const ImageCapturePage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-
+<BackButton/>
       {imageUri && (
         <View style={styles.imageContainer}>
           <Image source={{ uri: imageUri }} style={styles.image} />

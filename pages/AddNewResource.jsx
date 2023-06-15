@@ -5,6 +5,7 @@ import Slider from "@react-native-community/slider";
 import { postResource } from "../utils/utils";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
+import BackButton from "../components/BackButton";
 
 export const AddNewResource = ({ route }) => {
   const [submitError, setSubmitError] = useState(null)
@@ -49,6 +50,7 @@ export const AddNewResource = ({ route }) => {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <View style={styles.title}>
         <Text>Add new resource</Text>
       </View>
@@ -151,6 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
+    margin: 30,
     height: "30%",
     backgroundColor: "#fff",
   },
