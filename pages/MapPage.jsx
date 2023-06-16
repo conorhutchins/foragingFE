@@ -30,18 +30,19 @@ export default function MapPage({ navigation }) {
 
   return (
     <View style={styles.container}> 
-      {toggleValue ? <Map
-        targetLocation={targetLocation}
-        displayedResources={displayedResources}
-      />: <ResourceList
+      {toggleValue ? <ResourceList
       resources={displayedResources}
       navigation={navigation}
+      />: 
+      <Map
+        targetLocation={targetLocation}
+        displayedResources={displayedResources}
     />}
       
       <Nav setShowSearch={setShowSearch} navigation={navigation} toggleValue={toggleValue}  setToggleValue={setToggleValue} />
       {showSearch ? (
         <SearchBox setShowSearch={setShowSearch} />
-      ) : toggleValue ? (
+      ) : !toggleValue ? (
         <ResourceCards
           resources={displayedResources}
           cardPress={cardPress}
