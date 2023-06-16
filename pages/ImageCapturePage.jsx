@@ -22,17 +22,15 @@ export const ImageCapturePage = ({ navigation }) => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
     })();
   }, []);
 
-  let text = 'Waiting for Location..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = "Location found, go ahead and add a image!";
-  }
+  // let text = 'Waiting for Location..';
+  // if (errorMsg) {
+  //   text = errorMsg;
+  // } else if (location) {
+  //   text = "Location found, go ahead and add a image!";
+  //  we took this out as didnt feel neccessary}
 
   const pickImage = async () => {
 
@@ -47,6 +45,9 @@ export const ImageCapturePage = ({ navigation }) => {
 
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log(location);
     }
     console.log(result.assets);
   };
@@ -65,8 +66,8 @@ export const ImageCapturePage = ({ navigation }) => {
       )}
       <View >
         <Button title="Take a photo" onPress={pickImage} />
-        <Button title="Submit Photo" onPress={submitPress} disabled={!location}/>
-      <Text>{text}</Text>
+        <Button title="Submit Photo" onPress={submitPress} disabled={location === null}/>
+      {/* <Text>{text}</Text> we took this out as didnt feel neccessary*/} 
       </View>
     </View>
   );
