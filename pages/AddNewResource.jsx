@@ -1,11 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Image } from "expo-image";
-import { View, StyleSheet, Text, TextInput, Button } from "react-native";
+import { View, StyleSheet, Text, TextInput, Button, KeyboardAvoidingView, Platform } from "react-native";
 import Slider from "@react-native-community/slider";
 import { postResource } from "../utils/utils";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, } from "react";
 import { UserContext } from "../contexts/UserContext";
 import BackButton from "../components/BackButton";
+
 
 export const AddNewResource = ({ route }) => {
   const [submitError, setSubmitError] = useState(null)
@@ -70,6 +71,11 @@ export const AddNewResource = ({ route }) => {
    
 
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
+  >
     <View style={styles.container}>
       <BackButton />
       <View style={styles.title}>
@@ -154,7 +160,8 @@ export const AddNewResource = ({ route }) => {
           )}
         </Formik>
       </View>
-    </View>
+      </View>
+  </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

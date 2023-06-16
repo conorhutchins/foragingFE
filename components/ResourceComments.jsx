@@ -6,6 +6,8 @@ import {
   TextInput,
   StyleSheet,
   Button,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { fetchCommentsByResourceId, postComment } from "../utils/utils";
 import { Formik } from "formik";
@@ -21,12 +23,13 @@ export default function ResourceComments({ resource_id }) {
       setComments(comments);
     });
   }, []);
+
   const renderItem = ({ item }) => {
     return (
       <View style={styles.comment}>
-        <Text>{item.username}</Text>
-        <Text>{item.body}</Text>
-        <Text>{item.created_at}</Text>
+        <Text style={styles.commentText}>{item.username}</Text>
+        <Text style={styles.commentBody}>{item.body}</Text>
+        <Text style={styles.commentDate}>{item.created_at}</Text>
       </View>
     );
   };
@@ -54,26 +57,30 @@ export default function ResourceComments({ resource_id }) {
 
   return (
     <View style={styles.container}>
-      <Formik initialValues={{ commentBody: "" }} onSubmit={handleSubmit}>
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <>
-            <TextInput
-              style={styles.input}
-              placeholder="Comment..."
-              onChangeText={handleChange("commentBody")}
-              // onBlur={handleBlur('username')}
-              value={values.commentBody}
-            />
-            <Button onPress={handleSubmit} title="Submit" disabled ={values.commentBody === ""} />
-          </>
-        )}
-      </Formik>
-      {submitError && <Text>{submitError}</Text>}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+        style={styles.inputContainer}
+      >
+        <Formik initialValues={{ commentBody: "" }} onSubmit={handleSubmit}>
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <>
+              <TextInput
+                style={styles.input}
+                placeholder="Comment..."
+                onChangeText={handleChange("commentBody")}
+                value={values.commentBody}
+              />
+              <Button onPress={handleSubmit} title="Submit" disabled={values.commentBody === ""} />
+            </>
+          )}
+        </Formik>
+        {submitError && <Text>{submitError}</Text>}
+      </KeyboardAvoidingView>
       <FlatList
         data={comments}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
-        vertical
       />
     </View>
   );
@@ -81,25 +88,38 @@ export default function ResourceComments({ resource_id }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "95%",
-    height: 400,
-    margin: 10,
+    flex: 1,
+    padding: 10,
+    backgroundColor: "#f5f5f5",
   },
   comment: {
-    flexDirection: "column",
-    width: "95%",
-    height: 400,
-    backgroundColor: "lightgray",
-    margin: 10,
-    borderRadius: 20,
+    backgroundColor: "white",
     padding: 15,
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  commentText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  commentBody: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  commentDate: {
+    fontSize: 12,
+    color: "#888",
+  },
+  inputContainer: {
+    marginBottom: 10,
   },
   input: {
-    height: 40,
     borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
+    borderColor: "#ddd",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    backgroundColor: "white",
   },
 });

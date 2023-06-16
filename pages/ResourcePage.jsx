@@ -10,10 +10,10 @@ export const ResourcePage = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.title}>
-        <Text>{resource.resource_name}</Text>
-        <Text>{resource.username}</Text>
-        <Text>{resource.created_at}</Text>
+      <View style={styles.info}>
+        <Text style={styles.infoTitle}>Resource: {resource.resource_name}</Text>
+        <Text style={styles.infoAuthor}>Added by User:{resource.username}</Text>
+        <Text style={styles.infoDate}>Date Uploaded: {resource.created_at}</Text>
       </View>
       <View style={styles.imageContainer}>
         <Image
@@ -41,13 +41,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  title: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingHorizontal: 10,
+  info: {
+    marginTop: 20,
+    padding: 20,
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+  },
+  infoTitle: {
+    marginTop: 10,
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  infoAuthor: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 5,
+  },
+  infoDate: {
+    fontSize: 14,
+    color: "#888",
   },
   imageContainer: {
-    height: "50%",
+    height: "27%",
     backgroundColor: "#fff",
   },
   image: {
@@ -58,6 +74,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   comments:{
-    height: "100%"
+    height: "50%"
   }
 });
