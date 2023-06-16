@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView } from "react-native";
 import { UserContext } from "../contexts/UserContext";
 import { Formik } from "formik";
 
@@ -17,6 +17,11 @@ export default function Welcome({ navigation }) {
   };
 
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
+  >
     <View style={styles.container}>
       <Text style={styles.label}>Some things to note from the Devs</Text>
       <Text style={styles.subLabel}>- Do not use this app to find food.</Text>
@@ -40,7 +45,8 @@ export default function Welcome({ navigation }) {
           </>
         )}
       </Formik>
-    </View>
+      </View>
+      </KeyboardAvoidingView>
   );
 }
 
