@@ -8,24 +8,38 @@ import ResourceCards from "../components/ResourceCards";
 import { SearchBox } from "../components/SearchBox";
 import { ResourcesContext } from "../contexts/ResourcesContext";
 import ResourceList from "../components/ResourceList";
+import * as Location from 'expo-location';
 
 export default function MapPage({ navigation }) {
   const [toggleValue, setToggleValue] = useState(false);
-  const [targetLocation, setTargetlocation] = useState(null);
+  const [targetLocation, setTargetLocation] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
   const { displayedResources, setDisplayedResources } =
     useContext(ResourcesContext);
 
   useEffect(() => {
-    if (!displayedResources) {
-      fetchItems().then((items) => {
+    const fetchDataAndLocation = async () => {
+      if (!displayedResources) {
+        const items = await fetchItems();
         setDisplayedResources(items);
-      });
-    }
+        
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Location permission not granted!');
+          return;
+        }
+        
+        const location = await Location.getCurrentPositionAsync({});
+        setTargetLocation(location.coords);
+        console.log(targetLocation);
+      }
+    };
+
+    fetchDataAndLocation();
   }, []);
 
   const cardPress = (location) => {
-    setTargetlocation(location);
+    setTargetLocation(location);
   };
 
   return (
