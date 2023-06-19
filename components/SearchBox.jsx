@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { fetchItems } from "../utils/utils";
-import { TextInput, Button, StyleSheet } from "react-native";
+import { TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
 import { ResourcesContext } from "../contexts/ResourcesContext";
@@ -23,6 +23,11 @@ export const SearchBox = ({ setShowSearch }) => {
   };
 
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
+  >
     <Formik initialValues={{ searchTerm: "" }} onSubmit={handleSubmit}>
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <>
@@ -43,7 +48,8 @@ export const SearchBox = ({ setShowSearch }) => {
           <Button onPress={handleSubmit} title="Submit" />
         </>
       )}
-    </Formik>
+      </Formik>
+      </KeyboardAvoidingView>
   );
 };
 

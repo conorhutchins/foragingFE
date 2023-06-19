@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import { Image } from "expo-image";
 import Nav from "../components/Nav";
 import ResourceComments from "../components/ResourceComments";
@@ -9,6 +9,11 @@ export const ResourcePage = ({ navigation, route }) => {
   const { resource } = route.params;
 
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
+  >
     <View style={styles.container}>
       <View style={styles.info}>
         <Text style={styles.infoTitle}>Resource: {resource.resource_name}</Text>
@@ -34,6 +39,7 @@ export const ResourcePage = ({ navigation, route }) => {
         <ResourceComments resource_id={resource.resource_id} />
       </View>
     </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
     color: "#888",
   },
   imageContainer: {
-    height: "27%",
+    height: "40%",
     backgroundColor: "#fff",
   },
   image: {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useEffect, useState } from "react";
-import { StyleSheet, View, StatusBar, FlatList } from "react-native";
+import { StyleSheet, View, StatusBar, FlatList, KeyboardAvoidingView, Platform } from "react-native";
 import { fetchItems } from "../utils/utils";
 import Map from "../components/Map";
 import Nav from "../components/Nav";
@@ -29,6 +29,11 @@ export default function MapPage({ navigation }) {
   };
 
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
+  >
     <View style={styles.container}> 
       {toggleValue ? <ResourceList
       resources={displayedResources}
@@ -49,7 +54,8 @@ export default function MapPage({ navigation }) {
           navigation={navigation}
         />
       ) : null}
-    </View>
+      </View>
+      </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({
