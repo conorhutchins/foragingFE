@@ -44,7 +44,7 @@ export default function ResourceList({ resources, navigation, location }) {
         <Text style={{ fontSize: 20 }}>{item.resource_name}</Text>
         <Text style={{ fontSize: 20 }}> Description: {item.description}</Text>
         <Text style={{ fontSize: 20 }}> Created at: {item.created_at}</Text>
-        <Text style={{fontSize: 20}}>Distance: {`${calculateDistance(location.latitude, location.longitude, item.location.latitude, item.location.longitude)} km`}</Text>
+        <Text style={{fontSize: 20}}>Distance: {`${calculateDistance(location.latitude, location.longitude, item.latitude, item.longitude)} km`}</Text>
         <Button
           onPress={() => {
             viewResourceButtonPress(item);

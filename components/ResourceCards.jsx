@@ -39,7 +39,7 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
         <Text>{item.resource_name}</Text>
         <Text>{item.description}</Text>
         <Text>{item.created_at}</Text>
-        <Text>{`${calculateDistance(location.latitude, location.longitude, item.location.latitude, item.location.longitude)} km`}</Text>
+        <Text>{`${calculateDistance(location.latitude, location.longitude, item.latitude, item.longitude)} km`}</Text>
         <Button
           onPress={() => {
             cardPress(item.location);

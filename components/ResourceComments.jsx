@@ -28,8 +28,9 @@ export default function ResourceComments({ resource_id }) {
     return (
       <View style={styles.comment}>
         <Text style={styles.commentText}>{item.username}</Text>
-        <Text style={styles.commentBody}>{item.body}</Text>
+        <Text style={styles.commentBody}>{item.comment_body}</Text>
         <Text style={styles.commentDate}>{item.created_at}</Text>
+
       </View>
     );
   };
