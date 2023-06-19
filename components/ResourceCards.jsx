@@ -1,9 +1,30 @@
 import React from "react";
 import { View, FlatList, Text, Button } from "react-native";
 
-export default function ResourceCards({ cardPress, resources, navigation }) {
+export default function ResourceCards({ cardPress, resources, navigation, location }) {
   const viewResourceButtonPress = (resource) => {
     navigation.navigate("ResourcePage", { resource: resource });
+  };
+
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the Earth in kilometers
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+
+    return distance.toFixed(2); // Distance in kilometers to 2 decimal places
+
+  }
+
+  const toRadians = (degrees) => {
+    return (degrees * Math.PI) / 180;
   };
   const renderItem = ({ item }) => {
     return (
@@ -18,6 +39,7 @@ export default function ResourceCards({ cardPress, resources, navigation }) {
         <Text>{item.resource_name}</Text>
         <Text>{item.description}</Text>
         <Text>{item.created_at}</Text>
+        <Text>{`${calculateDistance(location.latitude, location.longitude, item.location.latitude, item.location.longitude)} km`}</Text>
         <Button
           onPress={() => {
             cardPress(item.location);

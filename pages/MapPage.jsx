@@ -51,7 +51,7 @@ export default function MapPage({ navigation }) {
     <View style={styles.container}> 
       {toggleValue ? <ResourceList
       resources={displayedResources}
-      navigation={navigation}
+      navigation={navigation} location={targetLocation}
       />: 
       <Map
         targetLocation={targetLocation}
@@ -66,6 +66,7 @@ export default function MapPage({ navigation }) {
           resources={displayedResources}
           cardPress={cardPress}
           navigation={navigation}
+          location={targetLocation}
         />
       ) : null}
       </View>
