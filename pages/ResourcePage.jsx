@@ -19,6 +19,9 @@ export const ResourcePage = ({ navigation, route }) => {
         <Text style={styles.infoTitle}>Resource: {resource.resource_name}</Text>
         <Text style={styles.infoAuthor}>Added by User:{resource.username}</Text>
         <Text style={styles.infoDate}>Date Uploaded: {resource.created_at}</Text>
+          <Text style={styles.infoDate}>Quality: {resource.condition}</Text>
+          <Text style={styles.infoDate}>Abundance: {resource.depletion}</Text>
+          
       </View>
       <View style={styles.imageContainer}>
         <Image
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
   },
   infoTitle: {
     marginTop: 10,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     marginBottom: 10,
   },
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     color: "#888",
   },
   imageContainer: {
-    height: "40%",
+    height: "38%",
     backgroundColor: "#fff",
   },
   image: {

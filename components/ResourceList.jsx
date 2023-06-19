@@ -16,7 +16,9 @@ export default function ResourceList({ resources, navigation }) {
           alignItems: 'center',
         }}
       >
-        <Text style = {{fontSize: 20}}>{item.resource_name}</Text>
+        <Text style={{ fontSize: 20 }}>{item.resource_name}</Text>
+        <Text style={{ fontSize: 20 }}> Description: {item.description}</Text>
+        <Text style={{ fontSize: 20 }}> Created at: {item.created_at}</Text>
         <Text style = {{fontSize: 20}}> Distance: </Text>
         <Button
           onPress={() => {
