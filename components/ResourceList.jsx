@@ -28,6 +28,9 @@ export default function ResourceList({ resources, navigation, location }) {
   };
 
   const renderItem = ({ item }) => {
+    const coords = item.location.split(',');
+    const lat = Number(coords[0])
+    const long= Number(coords[1])
     return (
       <View
         style={{
@@ -38,13 +41,11 @@ export default function ResourceList({ resources, navigation, location }) {
           alignItems: 'center',
         }}
       >
-        {/* {console.log(location)}
-        {console.log(item.location.latitute)};
-        {console.log(item)} */}
+       
         <Text style={{ fontSize: 20 }}>{item.resource_name}</Text>
         <Text style={{ fontSize: 20 }}> Description: {item.description}</Text>
         <Text style={{ fontSize: 20 }}> Created at: {item.created_at}</Text>
-        <Text style={{fontSize: 20}}>Distance: {`${calculateDistance(location.latitude, location.longitude, item.latitude, item.longitude)} km`}</Text>
+        <Text style={{fontSize: 20}}>Distance: {`${calculateDistance(location.latitude, location.longitude, lat, long)} km`}</Text>
         <Button
           onPress={() => {
             viewResourceButtonPress(item);

@@ -27,6 +27,13 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
     return (degrees * Math.PI) / 180;
   };
   const renderItem = ({ item }) => {
+    const coords = item.location.split(',');
+    const lat = Number(coords[0])
+    const long = Number(coords[1])
+    const resourceLocation = {
+      latitude: lat,
+      longitude: long,
+    };
     return (
       <View
         style={{
@@ -39,10 +46,10 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
         <Text>{item.resource_name}</Text>
         <Text>{item.description}</Text>
         <Text>{item.created_at}</Text>
-        <Text>{`${calculateDistance(location.latitude, location.longitude, item.latitude, item.longitude)} km`}</Text>
+        <Text>{`${calculateDistance(location.latitude, location.longitude, lat, long)} km`}</Text>
         <Button
           onPress={() => {
-            cardPress(item.location);
+            cardPress(resourceLocation);
           }}
           title="Show on map"
         />

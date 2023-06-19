@@ -9,10 +9,17 @@ export default function Map({ targetLocation, displayedResources }) {
   const showResources = () => {
     if (displayedResources) {
       return displayedResources.map((resource, index) => {
+        const coords = resource.location.split(",");
+        const lat = Number(coords[0]);
+        const long = Number(coords[1]);
+        const resourceLocation = {
+          latitude: lat,
+          longitude: long,
+        };
         return (
           <Marker
             key={index}
-            coordinate={resource.location}
+            coordinate={resourceLocation}
             title={resource.resource_name}
             description={resource.description}
           >
