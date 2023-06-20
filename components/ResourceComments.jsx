@@ -12,16 +12,26 @@ import {
 import { fetchCommentsByResourceId, postComment } from "../utils/utils";
 import { Formik } from "formik";
 import { UserContext } from "../contexts/UserContext";
+import LoadingComponent from "../components/LoadingComponent";
 
 export default function ResourceComments({ resource_id }) {
   const [comments, setComments] = useState(null);
   const { user } = useContext(UserContext);
   const [submitError, setSubmitError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchCommentsByResourceId(resource_id).then((comments) => {
-      setComments(comments);
-    });
+    setLoading(true);
+    fetchCommentsByResourceId(resource_id)
+      .then((comments) => {
+        setComments(comments);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
   }, []);
 
   const renderItem = ({ item }) => {
@@ -30,7 +40,6 @@ export default function ResourceComments({ resource_id }) {
         <Text style={styles.commentText}>{item.username}</Text>
         <Text style={styles.commentBody}>{item.comment_body}</Text>
         <Text style={styles.commentDate}>{item.created_at}</Text>
-
       </View>
     );
   };
@@ -55,6 +64,19 @@ export default function ResourceComments({ resource_id }) {
       });
     });
   };
+
+  if (loading) {
+    return <LoadingComponent />;
+  }
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text>Sorry, there was an error loading the comments</Text>
+        <Text>Error: {error}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

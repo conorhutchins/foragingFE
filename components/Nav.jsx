@@ -92,11 +92,11 @@ export default function Nav({
           accessibilityLabel="Add"
           onPress={addPagePress}
         />
-        <Button
+        {/* <Button
           title="Catalogue"
           color="#841584"
           accessibilityLabel="catalogue"
-        />
+        /> */}
        {route.name === "MapPage" && (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text>{toggleValue ? 'List' : 'Map'}</Text>

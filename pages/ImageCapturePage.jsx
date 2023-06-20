@@ -5,39 +5,35 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera, CameraType } from "expo-camera";
 import * as Location from 'expo-location';
 import BackButton from "../components/BackButton";
+import LoadingComponent from "../components/LoadingComponent";
 
 export const ImageCapturePage = ({ navigation }) => {
 
   const [imageUri, setImageUri] = useState(null);
   const [location, setLocation ] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null);
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
     (async () => {
-      
+      setLoading(true);
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-
+      setLoading(false);
     })();
   }, []);
 
-  // let text = 'Waiting for Location..';
-  // if (errorMsg) {
-  //   text = errorMsg;
-  // } else if (location) {
-  //   text = "Location found, go ahead and add a image!";
-  //  we took this out as didnt feel neccessary}
-
   const pickImage = async () => {
-
+    setLoading(true);
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
 
     if (status !== "granted") {
       alert("Camera permission not granted!");
+      setLoading(false);
       return;
     }
 
@@ -51,15 +47,20 @@ export const ImageCapturePage = ({ navigation }) => {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     }
+    setLoading(false);
   };
 
   const submitPress = () =>{
     navigation.navigate("AddNewResource",{image: imageUri, location: location} )
   }
 
+  if (loading) {
+    return <LoadingComponent size='large' color='#0000ff' />;
+  }
+
   return (
     <View style={styles.container}>
-<BackButton/>
+      <BackButton/>
       {imageUri && (
         <View style={styles.imageContainer}>
           <Image source={{ uri: imageUri.uri }} style={styles.image} />
@@ -68,7 +69,6 @@ export const ImageCapturePage = ({ navigation }) => {
       <View >
         <Button title="Take a photo" onPress={pickImage} />
         <Button title="Submit Photo" onPress={submitPress} disabled={location === null}/>
-      {/* <Text>{text}</Text> we took this out as didnt feel neccessary*/} 
       </View>
     </View>
   );
