@@ -13,12 +13,16 @@ import Slider from "@react-native-community/slider";
 import { postResource } from "../utils/utils";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { ResourcesContext } from "../contexts/ResourcesContext";
 import BackButton from "../components/BackButton";
+import { fetchItems } from "../utils/utils";
 
-export const AddNewResource = ({ route }) => {
+export const AddNewResource = ({ route, navigation }) => {
   const [submitError, setSubmitError] = useState(null);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+
+  const { setDisplayedResources} = useContext(ResourcesContext);
 
   const abundanceValues = ["depleted", "low", "medium", "high", "abundant"];
   const { image, location } = route.params;
@@ -55,7 +59,7 @@ export const AddNewResource = ({ route }) => {
     condition,
     depletion,
   }) => {
-    console.log(image.uri);
+
     const formData = new FormData();
     formData.append("image", {
       uri: image.uri,
@@ -70,11 +74,18 @@ export const AddNewResource = ({ route }) => {
     formData.append("latitude", location.coords.latitude);
     formData.append("longitude", location.coords.longitude);
     formData.append("created_at", new Date(location.timestamp).toUTCString());
-    postResource(formData).catch(() => {
+    postResource(formData).then(()=>{
+      return fetchItems()
+      
+    }).then((Items)=>{
+      setDisplayedResources(Items)
+      navigation.navigate("MapPage")
+    }).catch(() => {
       setSubmitError(
         "Sorry resource was not submitted, please restart the app and try again!"
       );
-    });
+    })
+
   };
 
   // const validateValues = (values) => {
@@ -178,14 +189,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   input: {
-    height: 40,
+    height: "10%",
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 16,
     paddingHorizontal: 8,
   },
   notes_input: {
-    height: 200,
+    height: "20%",
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 16,
@@ -209,7 +220,7 @@ const styles = StyleSheet.create({
     height: "30%",
     backgroundColor: "#fff",
   },
-  slider: { width: 200, height: 40 },
+  slider: { width: 200, height: "15%" },
   image: {
     flex: 1,
     width: undefined,

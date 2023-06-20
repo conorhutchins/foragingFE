@@ -22,7 +22,7 @@ export default function MapPage({ navigation }) {
       if (!displayedResources) {
         const items = await fetchItems();
         setDisplayedResources(items);
-        console.log(displayedResources);
+        // console.log(displayedResources);
         
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
@@ -32,12 +32,13 @@ export default function MapPage({ navigation }) {
         
         const location = await Location.getCurrentPositionAsync({});
         setTargetLocation(location.coords);
-        console.log(targetLocation);
       }
     };
 
     fetchDataAndLocation();
   }, []);
+
+  console.log(displayedResources, "in MapPage");
 
   const cardPress = (location) => {
     setTargetLocation(location);
