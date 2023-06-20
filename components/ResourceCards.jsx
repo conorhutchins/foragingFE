@@ -2,7 +2,7 @@ import React from "react";
 import { View, FlatList, Text, Button } from "react-native";
 import { getDistance } from "geolib";
 
-export default function ResourceCards({ cardPress, resources, navigation, location }) {
+export default function ResourceCards({ cardPress, resources, navigation, location, userLocation }) {
   const viewResourceButtonPress = (resource) => {
     navigation.navigate("ResourcePage", { resource: resource });
   };
@@ -35,7 +35,7 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
         <Text>{item.resource_name}</Text>
         <Text>{item.description}</Text>
         <Text>{item.created_at}</Text>
-        <Text>{`${calculateDistance(location.latitude, location.longitude, lat, long)} km`}</Text>
+        <Text>{`${calculateDistance(userLocation.latitude, userLocation.longitude, lat, long)} km`}</Text>
         <Button
           onPress={() => {
             cardPress(resourceLocation);

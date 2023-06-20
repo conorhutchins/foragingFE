@@ -50,9 +50,7 @@ export const ImageCapturePage = ({ navigation }) => {
       setImageUri(result.assets[0]);
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log(location);
     }
-    console.log(result.assets);
   };
 
   const submitPress = () =>{
