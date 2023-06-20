@@ -9,6 +9,7 @@ export default function Map({ targetLocation, displayedResources }) {
   const showResources = () => {
     if (displayedResources) {
       return displayedResources.map((resource, index) => {
+        console.log(resource, "<-- resource in map");
         const coords = resource.location.split(",");
         const lat = Number(coords[0]);
         const long = Number(coords[1]);

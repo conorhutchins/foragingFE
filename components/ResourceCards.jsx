@@ -28,8 +28,8 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
   };
   const renderItem = ({ item }) => {
     const coords = item.location.split(',');
-    const lat = Number(coords[0])
-    const long = Number(coords[1])
+    const lat = coords[0]
+    const long = coords[1]
     const resourceLocation = {
       latitude: lat,
       longitude: long,

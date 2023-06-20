@@ -41,10 +41,13 @@ export const ImageCapturePage = ({ navigation }) => {
       return;
     }
 
-    const result = await ImagePicker.launchCameraAsync();
+    const result = await ImagePicker.launchCameraAsync({
+      // base64: true,
+      // quality: 1,
+    });
 
     if (!result.canceled) {
-      setImageUri(result.assets[0].uri);
+      setImageUri(result.assets[0]);
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
       console.log(location);
@@ -61,7 +64,7 @@ export const ImageCapturePage = ({ navigation }) => {
 <BackButton/>
       {imageUri && (
         <View style={styles.imageContainer}>
-          <Image source={{ uri: imageUri }} style={styles.image} />
+          <Image source={{ uri: imageUri.uri }} style={styles.image} />
         </View>
       )}
       <View >

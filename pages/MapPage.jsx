@@ -22,6 +22,7 @@ export default function MapPage({ navigation }) {
       if (!displayedResources) {
         const items = await fetchItems();
         setDisplayedResources(items);
+        console.log(displayedResources);
         
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {

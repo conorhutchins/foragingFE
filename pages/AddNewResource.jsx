@@ -92,7 +92,7 @@ export const AddNewResource = ({ route }) => {
         <Text>Add new resource</Text>
       </View>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: image }} style={styles.image} />
+        <Image source={{ uri: image.uri }} style={styles.image} />
       </View>
       <View style={styles.formContainer}>
         <Formik
