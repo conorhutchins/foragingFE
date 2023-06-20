@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const foragingAPI = axios.create({
-  baseURL: "https://u08cns9a09.execute-api.us-east-1.amazonaws.com"
+  baseURL: "https://vgk9m0b765.execute-api.eu-west-1.amazonaws.com"
 });
 
 
