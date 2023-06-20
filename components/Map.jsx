@@ -1,7 +1,7 @@
 import MapView, { Marker, Callout } from "react-native-maps";
 import { StyleSheet, View, Linking, Text } from "react-native";
 
-export default function Map({ targetLocation, displayedResources }) {
+export default function Map({ targetLocation, displayedResources, navigation }) {
   const viewResourceButtonPress = (resource) => {
     navigation.navigate("ResourcePage", { resource: resource });
   };

@@ -12,7 +12,7 @@ import * as Location from 'expo-location';
 
 export default function MapPage({ navigation }) {
   const [toggleValue, setToggleValue] = useState(false);
-  const [targetLocation, setTargetLocation] = useState({ longtitue: 2.7185, latitude: 51.1474});
+  const [targetLocation, setTargetLocation] = useState({ longitude: 2.7185, latitude: 51.1474});
   const [showSearch, setShowSearch] = useState(false);
   const { displayedResources, setDisplayedResources } =
     useContext(ResourcesContext);
@@ -58,6 +58,7 @@ export default function MapPage({ navigation }) {
       <Map
         targetLocation={targetLocation}
         displayedResources={displayedResources}
+        navigation={navigation}
     />}
       
       <Nav setShowSearch={setShowSearch} navigation={navigation} toggleValue={toggleValue}  setToggleValue={setToggleValue} />
