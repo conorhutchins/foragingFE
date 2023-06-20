@@ -19,6 +19,7 @@ import * as Location from "expo-location";
 
 export default function MapPage({ navigation }) {
   const [toggleValue, setToggleValue] = useState(false);
+
   const [userLocation, setUserLocation] = useState({
     longtitue: 2.7185,
     latitude: 51.1474,
@@ -58,6 +59,7 @@ export default function MapPage({ navigation }) {
 
   return (
     <KeyboardAvoidingView
+
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0} // Adjust this offset if needed
@@ -80,6 +82,30 @@ export default function MapPage({ navigation }) {
 
         <Nav
           setShowSearch={setShowSearch}
+
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
+  >
+    <View style={styles.container}> 
+      {toggleValue ? <ResourceList
+      resources={displayedResources}
+      navigation={navigation} location={targetLocation}
+      />: 
+      <Map
+        targetLocation={targetLocation}
+        displayedResources={displayedResources}
+        navigation={navigation}
+    />}
+      
+      <Nav setShowSearch={setShowSearch} navigation={navigation} toggleValue={toggleValue}  setToggleValue={setToggleValue} />
+      {showSearch ? (
+        <SearchBox setShowSearch={setShowSearch} />
+      ) : !toggleValue ? (
+        <ResourceCards
+          resources={displayedResources}
+          cardPress={cardPress}
+
           navigation={navigation}
           toggleValue={toggleValue}
           setToggleValue={setToggleValue}

@@ -1,5 +1,6 @@
 import React from "react";
 import { View, FlatList, Text, Button } from "react-native";
+import { getDistance } from "geolib";
 
 export default function ResourceList({
   resources,
@@ -12,6 +13,7 @@ export default function ResourceList({
   };
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
+
     const R = 6371; // Radius of the Earth in kilometers
     const dLat = toRadians(lat2 - lat1);
     const dLon = toRadians(lon2 - lon1);
@@ -27,9 +29,13 @@ export default function ResourceList({
     return distance.toFixed(2); // Distance in kilometers to 2 decimal places
   };
 
-  const toRadians = (degrees) => {
-    return (degrees * Math.PI) / 180;
-  };
+    const distance = getDistance(
+      { latitude: lat1, longitude: lon1 },
+      { latitude: lat2, longitude: lon2 }
+    );
+    return (distance / 1000).toFixed(2);
+  }
+
 
   const renderItem = ({ item }) => {
     const coords = item.location.split(",");
