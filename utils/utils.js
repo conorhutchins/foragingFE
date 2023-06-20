@@ -22,22 +22,18 @@ export const fetchCommentsByResourceId = (resource_id) => {
     })
 };
 
-export const postComment = (resource_id, body, username) => {
-  const newComment = {
-    resource_id,
-    body,
-    username,
-  };
-
-  console.log(newComment);
+export const postResource = (formData) => {
+  console.log("request made");
+  // console.log(formData, "<<<<<<<<< form data");
+  return foragingAPI
+      .post("/api/resources", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) =>
+          console.log(response.data, "<<<<<<<<<<<<<<<server response")
+      )
+      .catch((error) =>
+          console.log(error, "<<<<<<<<<<<<<<<<<<<server error")
+      );
 };
 
-export const postResource = (body) => {
-if(body){
-  return Promise.resolve(console.log(body))
-
-}else {
-  return Promise.reject()
-}
-
-}

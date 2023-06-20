@@ -1,64 +1,80 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Image } from "expo-image";
-import { View, StyleSheet, Text, TextInput, Button, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Button,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import Slider from "@react-native-community/slider";
 import { postResource } from "../utils/utils";
-import { useContext, useEffect, useState, } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import BackButton from "../components/BackButton";
 
-
 export const AddNewResource = ({ route }) => {
-  const [submitError, setSubmitError] = useState(null)
-  const [errors, setErrors] = useState({})
-  const [touched, setTouched] = useState({})
+  const [submitError, setSubmitError] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   const abundanceValues = ["depleted", "low", "medium", "high", "abundant"];
-  const {image, location} = route.params
+  const { image, location } = route.params;
 
-  const{user: username} = useContext(UserContext)
+  const { user: username } = useContext(UserContext);
 
   const handleBlur = (field, values) => {
-    setTouched(touched => ({ ...touched, [field]: true }));
+    setTouched((touched) => ({ ...touched, [field]: true }));
     if (!values[field]) {
-      setErrors(errors => ({ ...errors, [field]: "This is a required field" }));
+      setErrors((errors) => ({
+        ...errors,
+        [field]: "This is a required field",
+      }));
     } else {
-      setErrors(errors => ({ ...errors, [field]: null }));
+      setErrors((errors) => ({ ...errors, [field]: null }));
     }
   };
 
   const handleSlidersBlur = (field, values) => {
-    setTouched(touched => ({ ...touched, [field]: true }));
+    setTouched((touched) => ({ ...touched, [field]: true }));
     if (values[field] === 0) {
-      setErrors(errors => ({ ...errors, [field]: "Please provide a rating" }));
+      setErrors((errors) => ({
+        ...errors,
+        [field]: "Please provide a rating",
+      }));
     } else {
-      setErrors(errors => ({ ...errors, [field]: null }));
+      setErrors((errors) => ({ ...errors, [field]: null }));
     }
-  }
+  };
 
-  const handleSubmit = ({resource_name,
+  const handleSubmit = ({
+    resource_name,
     description,
     condition,
-    depletion }) => {
-      const body = {
-        resource_name,
-        description,
-        condition,
-        depletion,
-        username,
-        location: {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude
-        },
-        image,
-        created_at: new Date(location.timestamp).toUTCString()
-      }
-    
-      postResource(body).catch(() => {
-        setSubmitError("Sorry resource was not submitted, please restart the app and try again!")
-
-      })
-    
+    depletion,
+  }) => {
+    console.log(image.uri);
+    const formData = new FormData();
+    formData.append("image", {
+      uri: image.uri,
+      type: "image/jpeg",
+      name: "appImage.jpeg",
+    });
+    formData.append("resource_name", resource_name);
+    formData.append("description", description);
+    formData.append("condition", condition);
+    formData.append("depletion", depletion);
+    formData.append("username", username);
+    formData.append("latitude", location.coords.latitude);
+    formData.append("longitude", location.coords.longitude);
+    formData.append("created_at", new Date(location.timestamp).toUTCString());
+    postResource(formData).catch(() => {
+      setSubmitError(
+        "Sorry resource was not submitted, please restart the app and try again!"
+      );
+    });
   };
 
   // const validateValues = (values) => {
@@ -68,21 +84,15 @@ export const AddNewResource = ({ route }) => {
   //   }
   //   return errors;
   // };
-   
 
   return (
-    <KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
-  >
     <View style={styles.container}>
       <BackButton />
       <View style={styles.title}>
         <Text>Add new resource</Text>
       </View>
       <View style={styles.imageContainer}>
-      <Image source={{ uri: image }} style={styles.image} />
+        <Image source={{ uri: image }} style={styles.image} />
       </View>
       <View style={styles.formContainer}>
         <Formik
@@ -92,28 +102,23 @@ export const AddNewResource = ({ route }) => {
             condition: 0,
             depletion: 0,
           }}
-          onSubmit={handleSubmit} 
+          onSubmit={handleSubmit}
           // validate={validateValues}
         >
-          {({
-            handleChange,
-            handleSubmit,
-            values,
-            setFieldValue,
-          }) => (
+          {({ handleChange, handleSubmit, values, setFieldValue }) => (
             <>
-              { touched.resource_name && errors.resource_name && (
+              {touched.resource_name && errors.resource_name && (
                 <Text style={styles.error}>{errors.resource_name}</Text>
               )}
-            <Text>Name of Forageable resource</Text>
+              <Text>Name of Forageable resource</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Name"
                 onChangeText={handleChange("resource_name")}
                 value={values.resource_name}
-                onBlur={()=> handleBlur("resource_name", values)}
+                onBlur={() => handleBlur("resource_name", values)}
               />
-               {touched.description && errors.description && (
+              {touched.description && errors.description && (
                 <Text style={styles.error}>{errors.description}</Text>
               )}
               <Text>Notes about the Forageable resource</Text>
@@ -122,9 +127,9 @@ export const AddNewResource = ({ route }) => {
                 placeholder="Notes"
                 onChangeText={handleChange("description")}
                 value={values.description}
-                onBlur={()=>handleBlur("description", values)}
+                onBlur={() => handleBlur("description", values)}
               />
-               {touched.condition && errors.condition && (
+              {touched.condition && errors.condition && (
                 <Text style={styles.error}>{errors.condition}</Text>
               )}
               <Text>Quality: {values.condition}%</Text>
@@ -141,7 +146,7 @@ export const AddNewResource = ({ route }) => {
               />
               {touched.depletion && errors.depletion && (
                 <Text style={styles.error}>{errors.depletion}</Text>
-                )}
+              )}
               <Text>Abundance: {abundanceValues[values.depletion]}</Text>
               <Slider
                 style={styles.slider}
@@ -154,14 +159,17 @@ export const AddNewResource = ({ route }) => {
                 // onSlidingComplete={()=> handleSlidersBlur("depletion", values)}
                 step={1}
               />
-              {submitError && <Text style={styles.error} >{submitError}</Text>}
-              <Button onPress={handleSubmit} title="Submit" disabled ={!values.resource_name || !values.description} />
+              {submitError && <Text style={styles.error}>{submitError}</Text>}
+              <Button
+                onPress={handleSubmit}
+                title="Submit"
+                disabled={!values.resource_name || !values.description}
+              />
             </>
           )}
         </Formik>
       </View>
-      </View>
-  </KeyboardAvoidingView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -210,6 +218,6 @@ const styles = StyleSheet.create({
     contentFit: "contain",
   },
   error: {
-color: '#f44336'
-  }
+    color: "#f44336",
+  },
 });
