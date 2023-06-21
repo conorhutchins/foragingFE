@@ -9,7 +9,7 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const radius = 6371;
-    
+
     const lat1Rad = toRadians(lat1);
     const lon1Rad = toRadians(lon1);
     const lat2Rad = toRadians(lat2);
@@ -25,7 +25,7 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
   
     // Calculate the distance
     const distance = radius * c;
-    return distance;
+    return distance.toFixed(2);
   }
   
   function toRadians(degrees) {
