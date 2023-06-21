@@ -22,13 +22,13 @@ export default function MapPage({ navigation }) {
   const [toggleValue, setToggleValue] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userLocation, setUserLocation] = useState({
-    longitude: 2.7185,
-    latitude: 51.1474,
-  });
+  // const [userLocation, setUserLocation] = useState({
+  //   longitude: -2.23817336417579, 
+  //   latitude: 53.47221030598573
+  // });
   const [targetLocation, setTargetLocation] = useState({
-    longitude: 2.7185,
-    latitude: 51.1474,
+    longitude: -2.23817336417579, 
+    latitude: 53.47221030598573
   });
   const [showSearch, setShowSearch] = useState(false);
   const { displayedResources, setDisplayedResources } =
@@ -48,7 +48,7 @@ export default function MapPage({ navigation }) {
           }
 
           const location = await Location.getCurrentPositionAsync({});
-          setUserLocation(location.coords);
+          // setUserLocation(location.coords);
         }
       } catch (error) {
         setError(error.message);
@@ -93,11 +93,13 @@ export default function MapPage({ navigation }) {
             resources={displayedResources}
             navigation={navigation}
             location={targetLocation}
-            userLocation={userLocation}
+            userLocation={{ longitude: -2.23817336417579, 
+              latitude: 53.47221030598573}}
           />
         ) : (
           <Map
-            initialRegion={userLocation}
+            initialRegion={{ longitude: -2.23817336417579, 
+              latitude: 53.47221030598573}}
             targetLocation={targetLocation}
             displayedResources={displayedResources}
             navigation={navigation}
@@ -118,7 +120,8 @@ export default function MapPage({ navigation }) {
             cardPress={cardPress}
             navigation={navigation}
             location={targetLocation}
-            userLocation={userLocation}
+            userLocation={{ longitude: -2.23817336417579, 
+              latitude: 53.47221030598573}}
           />
         ) : null}
       </View>
