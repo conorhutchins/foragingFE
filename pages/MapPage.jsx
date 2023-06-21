@@ -86,7 +86,7 @@ export default function MapPage({ navigation }) {
   }
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "#36d346"}}
+      style={{ flex: 1, backgroundColor: "#fff68f"}}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
@@ -138,11 +138,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#36d346",
+    backgroundColor: "#fff68f",
   },
   listContainer: {
     flex: 1,
-    backgroundColor: "#36d346",
-    marginTop: 80,
+    backgroundColor: "#fff68f",
+    marginTop: 20,
   },
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Text, Button } from "react-native";
+import { View, FlatList, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { getDistance } from "geolib";
 
 export default function ResourceList({
@@ -32,58 +32,24 @@ export default function ResourceList({
 
   sortedResources.sort()
 
-
-  //   const R = 6371; // Radius of the Earth in kilometers
-  //   const dLat = toRadians(lat2 - lat1);
-  //   const dLon = toRadians(lon2 - lon1);
-  //   const a =
-  //     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-  //     Math.cos(toRadians(lat1)) *
-  //       Math.cos(toRadians(lat2)) *
-  //       Math.sin(dLon / 2) *
-  //       Math.sin(dLon / 2);
-  //   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  //   const distance = R * c;
-
-  //   return distance.toFixed(2); // Distance in kilometers to 2 decimal places
-  // };
-  
-
-
   const renderItem = ({ item }) => {
     const coords = item.location.split(",");
     const lat = Number(coords[0]);
     const long = Number(coords[1]);
     return (
-      <View
-        style={{
-          width: "90%",
-          height: 175,
-          margin: 5,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#fff68f",
-          borderRadius: 25,
-          marginBottom: 10,
-          padding: 10,
-          alignSelf: "center",
-        }}
-      >
-        <Text style={{
-        textAlign: 'center',
-        marginBottom: 10,
-        marginTop: 10,
-        fontWeight: 'bold', fontSize: 26 }}>{item.resource_name}</Text>
-        <Text style={{ fontSize: 20 }}> {item.description}</Text>
-        <Button
+      <View style={styles.card}>
+        <Text style={styles.resourceName}>{item.resource_name}</Text>
+        <Text style={styles.description}> {item.description}</Text>
+        <TouchableOpacity
+          style={styles.viewButton}
           onPress={() => {
             viewResourceButtonPress(item);
           }}
-          title="View resource"
-        />
-        <Text style={{ fontSize: 15 }}>{item.created_at}</Text>
-        <Text style={{ fontSize: 15 }}>
-          {" "}
+        >
+          <Text style={styles.buttonText}>View resource</Text>
+        </TouchableOpacity>
+        <Text style={styles.createdDate}>{item.created_at}</Text>
+        <Text style={styles.distance}>
           {`${calculateDistance(
             userLocation.latitude,
             userLocation.longitude,
@@ -106,3 +72,56 @@ export default function ResourceList({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    width: "90%",
+    marginTop: 25,
+    height: 160,
+    margin: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#36d346",
+    borderRadius: 25,
+    marginBottom: 5,
+    padding: 10,
+    alignSelf: "center",
+  },
+  resourceName: {
+    textAlign: 'center',
+    marginBottom: 5,
+    fontWeight: 'bold', 
+    fontSize: 22
+  },
+  description: {
+    fontSize: 18, 
+    marginBottom: 5,
+    textAlign: 'center'
+  },
+  viewButton: {
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+    width: '50%',  
+    borderRadius: 10
+  },
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+
+  },
+  createdDate: {
+    fontSize: 15,
+    marginTop: 5,
+    marginBottom: 5,
+    textAlign: 'center',
+
+  },
+  distance: {
+    marginBottom: 5,
+    fontSize: 15,
+    textAlign: 'center',
+
+  },
+});

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Text, Button, StyleSheet } from "react-native";
+import { View, FlatList, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { getDistance } from "geolib";
 
 export default function ResourceCards({ cardPress, resources, navigation, location, userLocation }) {
@@ -46,31 +46,35 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
         style={{
           width: 200,
           height: 200,
-          backgroundColor: "#fff68f",
+          backgroundColor: '#36d346',
           margin: 10,
           borderRadius: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <View style = {styles.info}>
-        <Text style = {styles.title}>{item.resource_name}</Text>
-        
-        <Text style = {styles.info}>{item.description}</Text>
-        
-          </View>
-        <Button
+        <View style={styles.info}>
+          <Text style={styles.title}>{item.resource_name}</Text>
+          <Text style={styles.infoText}>{item.description}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => {
             cardPress(resourceLocation);
           }}
-          title="Show on map"
-        />
-        <Button
+        >
+          <Text style={styles.buttonText}>Show on map</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => {
             viewResourceButtonPress(item);
           }}
-          title="View resource"
-        />
-        <Text style = {styles.info}>{item.created_at}</Text>
-        <Text style = {styles.info}>{`${calculateDistance(userLocation.latitude, userLocation.longitude, lat, long)} km`}</Text>
+        >
+          <Text style={styles.buttonText}>View resource</Text>
+        </TouchableOpacity>
+        <Text style={styles.infoText}>{item.created_at}</Text>
+        <Text style={styles.infoText}>{`${calculateDistance(userLocation.latitude, userLocation.longitude, lat, long)} km`}</Text>
       </View>
     );
   };
@@ -84,21 +88,34 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
     />
   );
 }
+
 const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 22,
-    marginBottom: 10,
+    marginBottom: 5,
     marginTop: 10,
     fontWeight: 'bold',
-    // backgroundColor: '#35bb42',
-    // width: "67%",
-    // alignSelf: "center",
-    // borderRadius: 50,
+    color: "black",
   },
   info: {
     textAlign: 'center',
+  },
+  infoText: {
     fontSize: 15,
-  }
-
+    textAlign: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    padding: 10,
+    margin: 5,
+    width: '75%',
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
 });
