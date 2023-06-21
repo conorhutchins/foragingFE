@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Button,
+  TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
@@ -48,10 +48,12 @@ export default function ResourceComments({ resource_id }) {
         <Text style={styles.comment_body}>Comment: {item.comment_body}</Text>
         <Text style={styles.commentDate}>Date commented: {item.created_at}</Text>
         {user === item.username && (
-        <Button
+          <TouchableOpacity
             onPress={() => deleteComment(item.comment_id)}
-            title={"Delete comment"} 
-            />
+            style={styles.deleteButton}
+          >
+            <Text style={styles.deleteButtonText}>Delete comment</Text>
+          </TouchableOpacity>
         )}
       </View>
     );
@@ -72,16 +74,13 @@ export default function ResourceComments({ resource_id }) {
       comment_body: values.comment_body,
       username: user
     }
-    // formData.append("resource_id", resource_id);
-    // formData.append("comment_body", values.comment_body);
-    // formData.append("username", user);
 
     postComment(resource_id, formData).catch(() => {
       setComments((currentComments) => {
         const temporaryComments = [...currentComments];
         temporaryComments.shift();
         setSubmitError(
-          "Sorry, comment not submitted. /n Please check your connection,  and/or refresh your app and try again!"
+          "Sorry, comment not submitted.\nPlease check your connection and/or refresh your app and try again!"
         );
         return temporaryComments;
       });
@@ -100,7 +99,7 @@ export default function ResourceComments({ resource_id }) {
       </View>
     );
   }
-  // console.log(comments, "<<<<<< COMMENTS")
+
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
@@ -113,26 +112,27 @@ export default function ResourceComments({ resource_id }) {
             <>
               <TextInput
                 style={styles.input}
-                placeholder="Comment..."
+                placeholder="Add your comment..."
                 onChangeText={handleChange("comment_body")}
                 value={values.comment_body}
               />
-              <Button
+              <TouchableOpacity
+                style={styles.submitButton}
                 onPress={handleSubmit}
-                title="Submit"
                 disabled={values.comment_body === ""}
-              />
+              >
+                <Text style={styles.submitButtonText}>Submit</Text>
+              </TouchableOpacity>
             </>
           )}
         </Formik>
         {submitError && <Text>{submitError}</Text>}
       </KeyboardAvoidingView>
-        <FlatList
-          data={comments}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        >
-        </FlatList>
+      <FlatList
+        data={comments}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+      />
     </View>
   );
 }
@@ -141,10 +141,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#9f3c41",
   },
   comment: {
-    backgroundColor: "white",
+    width: "100%",
+    alignSelf: "center",
+    alignContent: "center",
+    backgroundColor: "#36d346",
     padding: 15,
     borderRadius: 5,
     marginBottom: 10,
@@ -153,14 +156,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 5,
+    alignSelf: "center",
   },
   comment_body: {
     fontSize: 14,
     marginBottom: 5,
+    alignSelf: "center",
   },
   commentDate: {
     fontSize: 12,
-    color: "#888",
+    alignSelf: "center",
+  },
+  deleteButton: {
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 10,
+  },
+  deleteButtonText: {
+    color: "black",
+    textAlign: "center",
+    fontWeight: "bold",
   },
   inputContainer: {
     marginBottom: 10,
@@ -172,5 +189,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
     backgroundColor: "white",
+  },
+  submitButton: {
+    alignSelf: "center",
+    width: "75%",
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+    borderRadius: 10,
+  },
+  submitButtonText: {
+    color: "black",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
