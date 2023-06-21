@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { fetchCommentsByResourceId, postComment } from "../utils/utils";
+import { fetchCommentsByResourceId, postComment, removeComment } from "../utils/utils";
 import { Formik } from "formik";
 import { UserContext } from "../contexts/UserContext";
 import LoadingComponent from "../components/LoadingComponent";
@@ -34,26 +34,49 @@ export default function ResourceComments({ resource_id }) {
       });
   }, []);
 
+  const deleteComment = (comment_id) => {
+    removeComment(comment_id).catch((err) => {
+      // console.log(err)
+    })
+  }
+
   const renderItem = ({ item }) => {
+    // console.log(item)
     return (
       <View style={styles.comment}>
-        <Text style={styles.commentText}>{item.username}</Text>
-        <Text style={styles.commentBody}>{item.comment_body}</Text>
-        <Text style={styles.commentDate}>{item.created_at}</Text>
+        <Text style={styles.commentText}>User: {item.username}</Text>
+        <Text style={styles.comment_body}>Comment: {item.comment_body}</Text>
+        <Text style={styles.commentDate}>Date commented: {item.created_at}</Text>
+        {user === item.username && (
+        <Button
+            onPress={() => deleteComment(item.comment_id)}
+            title={"Delete comment"} 
+            />
+        )}
       </View>
     );
   };
 
   const handleSubmit = (values) => {
     const optimisticComment = {
-      body: values.commentBody,
+      comment_body: values.comment_body,
       username: user,
       created_at: Date(),
     };
     setComments((currentComments) => {
       return [optimisticComment, ...currentComments];
     });
-    postComment(resource_id, values.commentBody, user).catch(() => {
+
+    const formData = {
+      resource_id: resource_id,
+      comment_body: values.comment_body,
+      username: user
+    }
+    // formData.append("resource_id", resource_id);
+    // formData.append("comment_body", values.comment_body);
+    // formData.append("username", user);
+
+    postComment(resource_id, formData).catch(() => {
       setComments((currentComments) => {
         const temporaryComments = [...currentComments];
         temporaryComments.shift();
@@ -77,34 +100,39 @@ export default function ResourceComments({ resource_id }) {
       </View>
     );
   }
-
+  // console.log(comments, "<<<<<< COMMENTS")
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
         style={styles.inputContainer}
       >
-        <Formik initialValues={{ commentBody: "" }} onSubmit={handleSubmit}>
+        <Formik initialValues={{ comment_body: "" }} onSubmit={handleSubmit}>
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <>
               <TextInput
                 style={styles.input}
                 placeholder="Comment..."
-                onChangeText={handleChange("commentBody")}
-                value={values.commentBody}
+                onChangeText={handleChange("comment_body")}
+                value={values.comment_body}
               />
-              <Button onPress={handleSubmit} title="Submit" disabled={values.commentBody === ""} />
+              <Button
+                onPress={handleSubmit}
+                title="Submit"
+                disabled={values.comment_body === ""}
+              />
             </>
           )}
         </Formik>
         {submitError && <Text>{submitError}</Text>}
       </KeyboardAvoidingView>
-      <FlatList
-        data={comments}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
+        <FlatList
+          data={comments}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        >
+        </FlatList>
     </View>
   );
 }
@@ -126,7 +154,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
   },
-  commentBody: {
+  comment_body: {
     fontSize: 14,
     marginBottom: 5,
   },
