@@ -1,8 +1,21 @@
 import React from "react";
-import { View, FlatList, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { getDistance } from "geolib";
+import { dateFormatter } from "../utils/utils";
 
-export default function ResourceCards({ cardPress, resources, navigation, location, userLocation }) {
+export default function ResourceCards({
+  cardPress,
+  resources,
+  navigation,
+  location,
+  userLocation,
+}) {
   const viewResourceButtonPress = (resource) => {
     navigation.navigate("ResourcePage", { resource: resource });
   };
@@ -14,43 +27,46 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
     const lon1Rad = toRadians(lon1);
     const lat2Rad = toRadians(lat2);
     const lon2Rad = toRadians(lon2);
-  
+
     // Difference between the latitudes and longitudes
     const deltaLat = lat2Rad - lat1Rad;
     const deltaLon = lon2Rad - lon1Rad;
-  
+
     // Haversine formula
-    const a = Math.sin(deltaLat/2) ** 2 + Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(deltaLon/2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  
+    const a =
+      Math.sin(deltaLat / 2) ** 2 +
+      Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(deltaLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
     // Calculate the distance
     const distance = radius * c;
     return distance.toFixed(2);
-  }
-  
+  };
+
   function toRadians(degrees) {
-    return degrees * Math.PI / 180;
+    return (degrees * Math.PI) / 180;
   }
-  
 
   const renderItem = ({ item }) => {
-    const coords = item.location.split(',');
-    const lat = coords[0]
-    const long = coords[1]
+    const coords = item.location.split(",");
+    const lat = coords[0];
+    const long = coords[1];
     const resourceLocation = {
       latitude: lat,
       longitude: long,
     };
+
+    console.log(resources);
     return (
       <View
         style={{
           width: 200,
           height: 200,
-          backgroundColor: '#36d346',
+          backgroundColor: "#36d346",
           margin: 10,
           borderRadius: 20,
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <View style={styles.info}>
@@ -73,8 +89,13 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
         >
           <Text style={styles.buttonText}>View resource</Text>
         </TouchableOpacity>
-        <Text style={styles.infoText}>{item.created_at}</Text>
-        <Text style={styles.infoText}>{`${calculateDistance(userLocation.latitude, userLocation.longitude, lat, long)} km`}</Text>
+        <Text style={styles.infoText}>{dateFormatter(item.created_at)}</Text>
+        <Text style={styles.infoText}>{`${calculateDistance(
+          userLocation.latitude,
+          userLocation.longitude,
+          lat,
+          long
+        )} km`}</Text>
       </View>
     );
   };
@@ -91,31 +112,31 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
 
 const styles = StyleSheet.create({
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 22,
     marginBottom: 5,
     marginTop: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: "black",
   },
   info: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   infoText: {
     fontSize: 15,
-    textAlign: 'center',
+    textAlign: "center",
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
     padding: 10,
     margin: 5,
-    width: '75%',
+    width: "75%",
     borderRadius: 10,
   },
   buttonText: {
-    color: 'black',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    color: "black",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });

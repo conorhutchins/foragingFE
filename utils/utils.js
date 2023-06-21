@@ -12,7 +12,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   );
 
   return (distance / 1000).toFixed(2);
-}
+};
 
 export const fetchItems = (params) => {
   return foragingAPI.get("/api/resources").then((data) => {
@@ -20,7 +20,7 @@ export const fetchItems = (params) => {
     // const sortedResources = resources.sort((a, b) => {
     //   calculateDistance(a.location
     //   if (calculateDistance)
-    //   return 
+    //   return
     // })
     return resources;
   });
@@ -61,4 +61,11 @@ export const removeComment = (comment_id) => {
   return foragingAPI.delete(`/api/comments/${comment_id}`).then(() => {
     console.log("Comment deleted");
   });
+};
+
+export const dateFormatter = (date) => {
+  const newDate = new Date(+date);
+  const options = { timeStyle: "short" };
+  const formattedDate = newDate.toLocaleString("en-GB", options);
+  return formattedDate;
 };

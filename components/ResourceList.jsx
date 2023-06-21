@@ -1,6 +1,13 @@
 import React from "react";
-import { View, FlatList, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { getDistance } from "geolib";
+import { dateFormatter } from "../utils/utils";
 
 export default function ResourceList({
   resources,
@@ -18,19 +25,24 @@ export default function ResourceList({
       { latitude: lat2, longitude: lon2 }
     );
     return (distance / 1000).toFixed(2);
-  }
+  };
 
-  const sortedResources = []
+  const sortedResources = [];
   resources.forEach((item) => {
     const coords = item.location.split(",");
     const lat = Number(coords[0]);
     const long = Number(coords[1]);
-    const distance = calculateDistance(userLocation.latitude, userLocation.longitude, lat, long);
+    const distance = calculateDistance(
+      userLocation.latitude,
+      userLocation.longitude,
+      lat,
+      long
+    );
     item.distance = distance;
     sortedResources.push(item);
-  })
+  });
 
-  sortedResources.sort()
+  sortedResources.sort();
 
   const renderItem = ({ item }) => {
     const coords = item.location.split(",");
@@ -48,7 +60,7 @@ export default function ResourceList({
         >
           <Text style={styles.buttonText}>View resource</Text>
         </TouchableOpacity>
-        <Text style={styles.createdDate}>{item.created_at}</Text>
+        <Text style={styles.createdDate}>{dateFormatter(item.created_at)}</Text>
         <Text style={styles.distance}>
           {`${calculateDistance(
             userLocation.latitude,
@@ -88,40 +100,37 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   resourceName: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 5,
-    fontWeight: 'bold', 
-    fontSize: 22
+    fontWeight: "bold",
+    fontSize: 22,
   },
   description: {
-    fontSize: 18, 
+    fontSize: 18,
     marginBottom: 5,
-    textAlign: 'center'
+    textAlign: "center",
   },
   viewButton: {
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     padding: 10,
-    width: '50%',  
-    borderRadius: 10
+    width: "50%",
+    borderRadius: 10,
   },
   buttonText: {
-    color: 'black',
-    textAlign: 'center',
-    fontWeight: 'bold',
-
+    color: "black",
+    textAlign: "center",
+    fontWeight: "bold",
   },
   createdDate: {
     fontSize: 15,
     marginTop: 5,
     marginBottom: 5,
-    textAlign: 'center',
-
+    textAlign: "center",
   },
   distance: {
     marginBottom: 5,
     fontSize: 15,
-    textAlign: 'center',
-
+    textAlign: "center",
   },
 });
