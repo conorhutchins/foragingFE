@@ -56,7 +56,6 @@ export default function ResourceCards({
       longitude: long,
     };
 
-    console.log(resources);
     return (
       <View
         style={{
