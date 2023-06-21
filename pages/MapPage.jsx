@@ -143,5 +143,6 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     backgroundColor: "#36d346",
+    marginTop: 80,
   },
 });

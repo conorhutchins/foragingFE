@@ -91,7 +91,7 @@ export default function Welcome({ navigation }) {
 const styles = StyleSheet.create({
   title: {
     position: "absolute",
-    top: 100,
+    top: 80,
     alignSelf: "center",
   },
   logo: {
