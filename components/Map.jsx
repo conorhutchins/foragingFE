@@ -71,8 +71,10 @@ export default function Map({ targetLocation, displayedResources, navigation }) 
 
 const styles = StyleSheet.create({
   map: {
-    width: "100%",
-    height: "65%",
+    width: "90%",
+    height: "60%",
+    marginTop: "15%",
+    borderRadius: 50,
   },
   markerPopup: {
       width: 200,  // Adjust the width to your desired size

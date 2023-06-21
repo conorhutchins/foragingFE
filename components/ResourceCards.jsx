@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Text, Button } from "react-native";
+import { View, FlatList, Text, Button, StyleSheet } from "react-native";
 import { getDistance } from "geolib";
 
 export default function ResourceCards({ cardPress, resources, navigation, location, userLocation }) {
@@ -46,14 +46,17 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
         style={{
           width: 200,
           height: 200,
-          backgroundColor: "lightgray",
+          backgroundColor: "#fff68f",
           margin: 10,
+          borderRadius: 20,
         }}
       >
-        <Text>{item.resource_name}</Text>
-        <Text>{item.description}</Text>
-        <Text>{item.created_at}</Text>
-        <Text>{`${calculateDistance(userLocation.latitude, userLocation.longitude, lat, long)} km`}</Text>
+        <View style = {styles.info}>
+        <Text style = {styles.title}>{item.resource_name}</Text>
+        
+        <Text style = {styles.info}>{item.description}</Text>
+        
+          </View>
         <Button
           onPress={() => {
             cardPress(resourceLocation);
@@ -66,6 +69,8 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
           }}
           title="View resource"
         />
+        <Text style = {styles.info}>{item.created_at}</Text>
+        <Text style = {styles.info}>{`${calculateDistance(userLocation.latitude, userLocation.longitude, lat, long)} km`}</Text>
       </View>
     );
   };
@@ -79,3 +84,21 @@ export default function ResourceCards({ cardPress, resources, navigation, locati
     />
   );
 }
+const styles = StyleSheet.create({
+  title: {
+    textAlign: 'center',
+    fontSize: 22,
+    marginBottom: 10,
+    marginTop: 10,
+    fontWeight: 'bold',
+    // backgroundColor: '#35bb42',
+    // width: "67%",
+    // alignSelf: "center",
+    // borderRadius: 50,
+  },
+  info: {
+    textAlign: 'center',
+    fontSize: 15,
+  }
+
+});

@@ -46,18 +46,33 @@ export default function ResourceList({
     return (
       <View
         style={{
-          width: "100%",
-          height: 140,
+          width: "90%",
+          height: 175,
           margin: 5,
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "#fff68f",
+          borderRadius: 25,
+          marginBottom: 10,
+          padding: 10,
+          alignSelf: "center",
         }}
       >
-        <Text style={{ fontSize: 20 }}>{item.resource_name}</Text>
-        <Text style={{ fontSize: 20 }}> Description: {item.description}</Text>
-        <Text style={{ fontSize: 20 }}> Created at: {item.created_at}</Text>
-        <Text style={{ fontSize: 20 }}>
-          Distance:{" "}
+        <Text style={{
+        textAlign: 'center',
+        marginBottom: 10,
+        marginTop: 10,
+        fontWeight: 'bold', fontSize: 26 }}>{item.resource_name}</Text>
+        <Text style={{ fontSize: 20 }}> {item.description}</Text>
+        <Button
+          onPress={() => {
+            viewResourceButtonPress(item);
+          }}
+          title="View resource"
+        />
+        <Text style={{ fontSize: 15 }}>{item.created_at}</Text>
+        <Text style={{ fontSize: 15 }}>
+          {" "}
           {`${calculateDistance(
             userLocation.latitude,
             userLocation.longitude,
@@ -65,12 +80,6 @@ export default function ResourceList({
             long
           )} km`}
         </Text>
-        <Button
-          onPress={() => {
-            viewResourceButtonPress(item);
-          }}
-          title="View resource"
-        />
       </View>
     );
   };

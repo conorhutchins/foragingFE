@@ -87,7 +87,7 @@ export default function Nav({
           />
         )}
         <Button
-          title="Add"
+          title="Add Resource"
           color="#841584"
           accessibilityLabel="Add"
           onPress={addPagePress}

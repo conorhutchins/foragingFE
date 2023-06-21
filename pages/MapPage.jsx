@@ -64,6 +64,10 @@ export default function MapPage({ navigation }) {
     setTargetLocation(location);
   };
 
+  const containerStyles = toggleValue
+    ? styles.listContainer
+    : styles.container;
+  
   if (loading) {
     return (
       // <View style={styles.container}>
@@ -80,14 +84,14 @@ export default function MapPage({ navigation }) {
       </View>
     );
   }
-
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
-      <View style={styles.container}>
+      
+      <View style={containerStyles}>
         {toggleValue ? (
           <ResourceList
             resources={displayedResources}
@@ -131,5 +135,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#36d346",
+  },
+  listContainer: {
+    flex: 1,
+    backgroundColor: "#36d346",
   },
 });
