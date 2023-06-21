@@ -1,12 +1,27 @@
 import axios from "axios";
+import { getDistance } from "geolib";
 
 const foragingAPI = axios.create({
   baseURL: "https://u08cns9a09.execute-api.us-east-1.amazonaws.com",
 });
 
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+  const distance = getDistance(
+    { latitude: lat1, longitude: lon1 },
+    { latitude: lat2, longitude: lon2 }
+  );
+
+  return (distance / 1000).toFixed(2);
+}
+
 export const fetchItems = (params) => {
   return foragingAPI.get("/api/resources").then((data) => {
     const resources = data.data.spots.Items;
+    // const sortedResources = resources.sort((a, b) => {
+    //   calculateDistance(a.location
+    //   if (calculateDistance)
+    //   return 
+    // })
     return resources;
   });
 };
