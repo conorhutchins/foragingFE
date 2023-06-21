@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Text ,Button, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
-import { Camera, CameraType } from "expo-camera";
 import * as Location from 'expo-location';
 import BackButton from "../components/BackButton";
 import LoadingComponent from "../components/LoadingComponent";
@@ -15,6 +14,8 @@ export const ImageCapturePage = ({ navigation }) => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Added
+  const windowHeight = Dimensions.get('window').height;
 
   useEffect(() => {
     (async () => {
@@ -57,14 +58,11 @@ export const ImageCapturePage = ({ navigation }) => {
       return;
     }
     navigation.navigate("AddNewResource", { image: imageUri, location: location })
-    
   }
 
-  
   const buttonStyling = location 
   ? styles.buttonText
   : styles.disabledButtonText;
-
 
   if (loading) {
     return <LoadingComponent size='large' color='#0000ff' />;
@@ -74,38 +72,32 @@ export const ImageCapturePage = ({ navigation }) => {
     <View style={styles.container}>
       <BackButton/>
       {imageUri && (
-        <View style={styles.imageContainer}>
+        <View style={[styles.imageContainer, { height: windowHeight * 0.3 }]}>
           <Image source={{ uri: imageUri.uri }} style={styles.image} />
         </View>
       )}
       <View >
         
       <TouchableOpacity
-                  style={styles.button}
-                  onPress={pickImage}
-                >
-                  <Text style={styles.buttonText}>Take a photo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-                  style={styles.button}
-            onPress={submitPress}
-              disabled={location === null}
-          
-                >
-                  <Text style={buttonStyling}>Submit</Text>
-                </TouchableOpacity>
-
-
-        {/* <Button title="Take a photo" onPress={pickImage} /> 
-        <Button title="Submit Photo" onPress={submitPress} disabled={location === null}/> */}
+        style={styles.button}
+        onPress={pickImage}
+      >
+      <Text style={styles.buttonText}>Take a photo</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={submitPress}
+        disabled={location === null}
+      >
+        <Text style={buttonStyling}>Submit</Text>
+      </TouchableOpacity>
       </View>
       <View style={styles.logo}>
           <Image
             source={require("../assets/logo.png")}
             style={{ width: 300, height: 300, alignSelf: "center" }}
           />
-
-</View>
+      </View>
     </View>
   );
 };
@@ -123,22 +115,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   imageContainer: {
-    height: "50%",
     backgroundColor: "#fff",
   },
   image: {
     flex: 1,
     width: undefined,
     height: undefined,
-    backgroundColor: "#0553",
-    contentFit: "contain",
+    resizeMode: "cover",
   },
   button: {
-    backgroundColor: "#fff68f",
+    backgroundColor: "white",
     padding: 8,
     borderRadius: 25,
     width: "67%",
     alignSelf: "center",
+    margin: 10,
   },
   buttonText: {
     color: "#492c03",
@@ -147,7 +138,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   disabledButtonText: {
-      color: "grey",
+      color: "lightgrey",
       fontSize: 20,
       fontWeight: "bold",
       textAlign: "center",
