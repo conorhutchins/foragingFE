@@ -17,9 +17,20 @@ export default function ResourceList({
       { latitude: lat1, longitude: lon1 },
       { latitude: lat2, longitude: lon2 }
     );
-  
     return (distance / 1000).toFixed(2);
   }
+
+  const sortedResources = []
+  resources.forEach((item) => {
+    const coords = item.location.split(",");
+    const lat = Number(coords[0]);
+    const long = Number(coords[1]);
+    const distance = calculateDistance(userLocation.latitude, userLocation.longitude, lat, long);
+    item.distance = distance;
+    sortedResources.push(item);
+  })
+
+  sortedResources.sort()
 
 
   //   const R = 6371; // Radius of the Earth in kilometers
@@ -78,7 +89,7 @@ export default function ResourceList({
   return (
     <View>
       <FlatList
-        data={resources}
+        data={sortedResources}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         vertical
