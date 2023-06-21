@@ -66,9 +66,9 @@ export default function MapPage({ navigation }) {
 
   if (loading) {
     return (
-      <View style={styles.container}>
+      // <View style={styles.container}>
       <LoadingComponent/>
-      </View>
+      // </View>
     );
   }
 

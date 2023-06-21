@@ -3,7 +3,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 
 const LoadingComponent = ({ size, color }) => (
   <View style={styles.container}>
-    <ActivityIndicator size={size || 'large'} color={color || '#0000ff'} />
+    <ActivityIndicator size={size || 'large'} color={color || '#fff68f'} />
   </View>
 );
 
@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#35bb42',
   },
 });
 
