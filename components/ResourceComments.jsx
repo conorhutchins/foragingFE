@@ -40,11 +40,13 @@ export default function ResourceComments({ resource_id }) {
   }, [resource_id]);
 
   const deleteComment = (comment_id) => {
-    removeComment(comment_id).catch((err) => {});
+
+    removeComment(comment_id)
+
   };
 
   const renderItem = ({ item }) => {
-    // console.log(item)
+  
     return (
       <View style={styles.comment}>
         <Text style={styles.commentText}>User: {item.username}</Text>
@@ -112,6 +114,7 @@ export default function ResourceComments({ resource_id }) {
         keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
         style={styles.inputContainer}
       >
+        
         <Formik initialValues={{ comment_body: "" }} onSubmit={handleSubmit}>
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <>
@@ -130,7 +133,8 @@ export default function ResourceComments({ resource_id }) {
               </TouchableOpacity>
             </>
           )}
-        </Formik>
+          </Formik>
+         
         {submitError && <Text>{submitError}</Text>}
       </KeyboardAvoidingView>
       <FlatList
@@ -146,15 +150,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#9f3c41",
   },
   comment: {
-    width: "100%",
+    width: "80%",
     alignSelf: "center",
     alignContent: "center",
     backgroundColor: "#36d346",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 25,
     marginBottom: 10,
   },
   commentText: {
@@ -185,22 +188,31 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   inputContainer: {
+    height: "20%",
     marginBottom: 10,
   },
   input: {
     borderWidth: 1,
+    width: "80%",
+    alignSelf: "center",
     borderColor: "#ddd",
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
     backgroundColor: "white",
+    borderRadius: 25,
+    height: "35%",
   },
   submitButton: {
-    alignSelf: "center",
-    width: "75%",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "white",
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 25,
+    width: "67%",
+    alignSelf: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.4,
+    elevation: 2,
   },
   submitButtonText: {
     color: "black",

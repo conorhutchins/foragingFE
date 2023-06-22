@@ -16,22 +16,29 @@ export const ResourcePage = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0} // Adjust this offset if needed
+
+    style={{ flex: 1, backgroundColor: "#fff68f" }}
+    behavior={Platform.OS === "ios" ? "padding" : undefined}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0} // Adjust this offset if needed
+
     >
       <View style={styles.container}>
         <View style={styles.info}>
+    
+          <Text style={styles.infoAuthor}>@ {resource.username}{" "} </Text>
           <Text style={styles.infoTitle}>{resource.resource_name}</Text>
+            
+          
           <Text style={styles.infoDescription}> {resource.description}</Text>
-          <Text style={styles.infoAuthor}>Added by: {resource.username}</Text>
-          <Text style={styles.infoQuality}>Quality: {resource.condition}%</Text>
-          <Text style={styles.infoDate}>
-            Date Uploaded: {dateFormatter(resource.created_at)}
-          </Text>
-          <Text style={styles.infoAbundance}>
-            Abundance: {resource.depletion}%
-          </Text>
+
+          <View style={styles.oneLine}>
+          <Text style={styles.infoQuality}>Quality: {resource.condition}% {"        "}</Text>
+            <Text style={styles.infoAbundance}>Abundance: {resource.depletion}%</Text>
+          </View>
+          <Text style={styles.infoDate}>infoText: {
+    fontSize: 15,
+    textAlign: "center",
+  },</Text>
         </View>
         <View style={styles.imageContainer}>
           <Image
@@ -68,23 +75,38 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   infoTitle: {
-    marginTop: 10,
-    fontSize: 22,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 10,
     color: "#492c03",
     textAlign: "center",
   },
+  oneLine: {
+    flexDirection: "row",
+    alignSelf: "center",
+    justifyContent: "space-between",
+  },
   infoDescription: {
     fontSize: 16,
     color: "#492c03",
     textAlign: "center",
+
+
   },
   infoAuthor: {
-    fontSize: 15,
-    color: "#492c03",
+    fontSize: 18,
+    color: "#9f3c41", 
     marginBottom: 5,
     textAlign: "center",
+    marginTop: 20,
+  
+
+
+  },
+  titles: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   infoQuality: {
     fontSize: 15,
@@ -110,7 +132,12 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined,
     backgroundColor: "#fff68f",
-    resizeMode: "cover",
+    contentFit: "cover",
+    borderRadius: 25,
+    width: "90%",
+    alignSelf: "center",
+    borderWidth: 5,
+    borderColor: "grey"
   },
   comments: {
     height: "50%",
