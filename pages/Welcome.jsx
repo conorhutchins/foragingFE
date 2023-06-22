@@ -1,9 +1,8 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   Alert,
   KeyboardAvoidingView,
@@ -52,12 +51,12 @@ export default function Welcome({ navigation }) {
             <Text style={styles.subLabel}>- Do not use this app to find food -</Text>
             <Text style={styles.subLabel}>- Do not travel to the places listed -</Text>
             <Text style={styles.subLabel}>
-              - Do not eat any food you find when you don't travel there -
+              - Do not eat anything when you don't travel there -
             </Text>
           </View>
         )}
         {showWarning && (
-          <Text style={styles.usernameLabel}>Choose your username</Text>
+          <Text style={styles.usernameLabel}>Username</Text>
         )}
         <Formik initialValues={{ username: "" }} onSubmit={handleSubmit}>
           {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -72,14 +71,12 @@ export default function Welcome({ navigation }) {
                   value={values.username}
                 />
               </View>
-              <View style={styles.button}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={handleSubmit}
-                >
-                  <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleSubmit}
+              >
+                <Text style={styles.buttonText}>Submit</Text>
+              </TouchableOpacity>
             </>
           )}
         </Formik>
@@ -128,8 +125,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 22,
-    color: "#492c03",
+    fontSize: 28,
+    color: "#fff68f",
   },
   inputContainer: {
     marginTop: 10,
@@ -157,10 +154,14 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#fff68f",
-    padding: 8,
+    padding: 10,
     borderRadius: 25,
     width: "67%",
     alignSelf: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.4,
+    elevation: 2,
   },
   buttonText: {
     color: "#492c03",
