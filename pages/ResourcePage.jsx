@@ -10,30 +10,32 @@ import { Image } from "expo-image";
 import Nav from "../components/Nav";
 import ResourceComments from "../components/ResourceComments";
 import { dateFormatter } from "../utils/utils";
+import BackButton from "../components/BackButton";
 
 export const ResourcePage = ({ navigation, route }) => {
   const { resource } = route.params;
 
   return (
     <KeyboardAvoidingView
-
-    style={{ flex: 1, backgroundColor: "#fff68f" }}
-    behavior={Platform.OS === "ios" ? "padding" : undefined}
-    keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0} // Adjust this offset if needed
-
+      style={{ flex: 1, backgroundColor: "#fff68f" }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0} // Adjust this offset if needed
     >
       <View style={styles.container}>
+        <BackButton />
         <View style={styles.info}>
-    
-          <Text style={styles.infoAuthor}>@ {resource.username}{" "} </Text>
+          <Text style={styles.infoAuthor}>@ {resource.username} </Text>
           <Text style={styles.infoTitle}>{resource.resource_name}</Text>
-            
-          
+
           <Text style={styles.infoDescription}> {resource.description}</Text>
 
           <View style={styles.oneLine}>
-          <Text style={styles.infoQuality}>Quality: {resource.condition}% {"        "}</Text>
-            <Text style={styles.infoAbundance}>Abundance: {resource.depletion}%</Text>
+            <Text style={styles.infoQuality}>
+              Quality: {resource.condition}% {"        "}
+            </Text>
+            <Text style={styles.infoAbundance}>
+              Abundance: {resource.depletion}%
+            </Text>
           </View>
           <Text style={styles.infoDate}>
             Date Uploaded: {dateFormatter(resource.created_at)}
@@ -89,18 +91,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#492c03",
     textAlign: "center",
-
-
   },
   infoAuthor: {
     fontSize: 18,
-    color: "#9f3c41", 
+    color: "#9f3c41",
     marginBottom: 5,
     textAlign: "center",
     marginTop: 20,
-  
-
-
   },
   titles: {
     flexDirection: "row",
@@ -136,7 +133,7 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     borderWidth: 5,
-    borderColor: "grey"
+    borderColor: "grey",
   },
   comments: {
     height: "50%",
