@@ -2,10 +2,12 @@ import { useState, useContext } from "react";
 import { fetchItems } from "../utils/utils";
 import {
   TextInput,
+  Text,
   Button,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
@@ -51,7 +53,12 @@ export const SearchBox = ({ setShowSearch, userLocation }) => {
               <Picker.Item label="Location" value="location" />
               <Picker.Item label="Most recent" value="created_at" />
             </Picker>
-            <Button onPress={handleSubmit} title="Submit" />
+            <TouchableOpacity
+                style={styles.button}
+                onPress={handleSubmit}
+              >
+                <Text style={styles.buttonText}>Submit</Text>
+              </TouchableOpacity>
           </>
         )}
       </Formik>
@@ -67,4 +74,21 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 8,
   },
+  button: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 25,
+    width: "67%",
+    alignSelf: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.4,
+    elevation: 2,
+  },
+  buttonText: {
+    color: "#492c03",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  }
 });
