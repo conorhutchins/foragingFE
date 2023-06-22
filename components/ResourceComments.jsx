@@ -67,31 +67,44 @@ export default function ResourceComments({ resource_id }) {
   };
 
   const handleSubmit = (values) => {
-    const optimisticComment = {
-      comment_body: values.comment_body,
-      username: user,
-      created_at: Date(),
-    };
-    setComments((currentComments) => {
-      return [optimisticComment, ...currentComments];
-    });
-
     const formData = {
       resource_id: resource_id,
       comment_body: values.comment_body,
       username: user,
     };
-
-    postComment(resource_id, formData).catch(() => {
-      setComments((currentComments) => {
-        const temporaryComments = [...currentComments];
-        temporaryComments.shift();
-        setSubmitError(
-          "Sorry, comment not submitted.\nPlease check your connection and/or refresh your app and try again!"
-        );
-        return temporaryComments;
-      });
+  
+    const optimisticComment = {
+      comment_body: values.comment_body,
+      username: user,
+      created_at: dateFormatter(new Date()),
+    };
+  
+    setComments((currentComments) => {
+      const updatedComments = [
+        optimisticComment,
+        ...currentComments,
+      ];
+      return updatedComments;
     });
+  
+    postComment(resource_id, formData)
+      .then((response) => {
+        // Comment successfully posted
+        const updatedComments = [...comments]; // Get a copy of the comments array
+        const index = updatedComments.findIndex(comment => comment.comment_id === optimisticComment.comment_id);
+        updatedComments[index] = response.comment; // Replace the optimistic comment with the actual response from the server
+        setComments(updatedComments);
+      })
+      .catch((error) => {
+        setComments((currentComments) => {
+          const temporaryComments = [...currentComments];
+          temporaryComments.shift();
+          setSubmitError(
+            "Sorry, the comment was not submitted.\nPlease check your connection and/or refresh your app and try again!"
+          );
+          return temporaryComments;
+        });
+      });
   };
 
   if (loading) {
