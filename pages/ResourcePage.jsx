@@ -35,10 +35,9 @@ export const ResourcePage = ({ navigation, route }) => {
           <Text style={styles.infoQuality}>Quality: {resource.condition}% {"        "}</Text>
             <Text style={styles.infoAbundance}>Abundance: {resource.depletion}%</Text>
           </View>
-          <Text style={styles.infoDate}>infoText: {
-    fontSize: 15,
-    textAlign: "center",
-  },</Text>
+          <Text style={styles.infoDate}>
+            Date Uploaded: {dateFormatter(resource.created_at)}
+          </Text>
         </View>
         <View style={styles.imageContainer}>
           <Image
