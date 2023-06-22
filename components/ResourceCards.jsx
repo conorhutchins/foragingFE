@@ -72,7 +72,7 @@ export default function ResourceCards({
       >
         <View style={styles.info}>
           <Text style={styles.title}>{item.resource_name}</Text>
-          <Text style={styles.infoText}>{item.description}</Text>
+          <Text style={styles.infoText}>{item.description.slice(0, 20)}...</Text>
         </View>
         <TouchableOpacity
           style={styles.button}

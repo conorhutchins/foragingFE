@@ -92,9 +92,7 @@ export const AddNewResource = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <BackButton />
-      <View style={styles.title}>
-        <Text>Add new resource</Text>
-      </View>
+      
       <View style={styles.imageContainer}>
         <Image source={{ uri: image.uri }} style={styles.image} />
       </View>
@@ -184,23 +182,23 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    borderColor: "#9f3c41",
-    borderWidth: 2,
     marginBottom: 16,
     paddingHorizontal: 8,
     backgroundColor: "#ebf1ff",
     textAlign: "center", // Center align the text horizontally
+    width: "80%",
+    alignSelf: "center",
   },
   notes_input: {
     height: 100,
     borderColor: "gray",
     backgroundColor: "#ebf1ff",
-    borderColor: "#9f3c41",
-    borderWidth: 2,
     marginBottom: 16,
+    width: "80%",
     paddingHorizontal: 8,
     textAlignVertical: "top", // Align the text at the top
     textAlign: "center", // Center align the text horizontally
+    alignSelf: "center",
   },
   title: {
     alignItems: "center",
@@ -219,6 +217,10 @@ const styles = StyleSheet.create({
     margin: 30,
     height: "30%",
     backgroundColor: "#fff",
+    borderWidth: 5,
+    borderColor: "grey",
+    borderRadius: 25,
+    marginTop: 100
   },
   slider: { width: 200, height: "15%", marginBottom: 16, alignSelf: "center" },
   image: {
@@ -226,18 +228,22 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined,
     backgroundColor: "#36d346",
-    contentFit: "contain",
+    resizeMode: "cover",
+    borderRadius: 25,
   },
   error: {
     color: "#f44336",
   },
   submitButton: {
     backgroundColor: "#fff68f",
-    padding: 8,
+    padding: 10,
     borderRadius: 25,
-    alignSelf: "center",
     width: "67%",
-    marginBottom: 16,
+    alignSelf: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.4,
+    elevation: 2,
   },
   buttonText: {
     color: "#492c03",
