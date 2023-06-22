@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined,
     backgroundColor: "#fff68f",
-    resizeMode: "cover",
+    contentFit: "cover",
   },
   comments:{
     height: "50%",

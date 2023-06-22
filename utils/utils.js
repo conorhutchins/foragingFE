@@ -15,7 +15,6 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 export const fetchItems = (params) => {
-  console.log(params?.sort_by);
   return foragingAPI.get("/api/resources").then((data) => {
     const resources = data.data.spots.Items;
     let filteredResources = [...resources];
@@ -62,27 +61,15 @@ export const postResource = (formData) => {
     .post("/api/resources", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
-    .then((response) =>
-      console.log(
-        response.data,
-        "<<<<<<<<<<<<<<<server response POST RESROUCES"
-      )
-    )
-    .catch((error) => console.log(error, "<<<<<<<<<<<<<<<<<<<server error"));
 };
 
 export const postComment = (resource_id, formData) => {
   return foragingAPI
     .post(`/api/resources/${resource_id}/comments`, formData)
-    .then(() => {
-      console.log("Comment posted");
-    });
-};
+    };
 
 export const removeComment = (comment_id) => {
-  return foragingAPI.delete(`/api/comments/${comment_id}`).then(() => {
-    console.log("Comment deleted");
-  });
+  return foragingAPI.delete(`/api/comments/${comment_id}`);
 };
 
 export const dateFormatter = (date) => {

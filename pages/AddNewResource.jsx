@@ -93,7 +93,7 @@ export const AddNewResource = ({ route, navigation }) => {
     <View style={styles.container}>
       <BackButton />
       <View style={styles.title}>
-        <Text>Add new resource</Text>
+    
       </View>
       <View style={styles.imageContainer}>
         <Image source={{ uri: image.uri }} style={styles.image} />
@@ -166,7 +166,7 @@ export const AddNewResource = ({ route, navigation }) => {
                 onPress={handleSubmit}
                 disabled={!values.resource_name || !values.description}
               >
-                <Text style={styles.buttonText}>Submit</Text>
+                <Text style={styles.buttonText}>Add New Resource</Text>
               </TouchableOpacity>
             </>
           )}
@@ -184,23 +184,30 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    borderColor: "#9f3c41",
-    borderWidth: 2,
+    // borderColor: "#9f3c41",
+    // borderWidth: 2,
     marginBottom: 16,
     paddingHorizontal: 8,
     backgroundColor: "#ebf1ff",
     textAlign: "center", // Center align the text horizontally
+    borderWidth: 1,
+    paddingVertical: 10,
+    borderRadius: 15,
   },
   notes_input: {
     height: 100,
     borderColor: "gray",
     backgroundColor: "#ebf1ff",
-    borderColor: "#9f3c41",
-    borderWidth: 2,
+    // borderColor: "#9f3c41",
+    // borderWidth: 2,
     marginBottom: 16,
     paddingHorizontal: 8,
     textAlignVertical: "top", // Align the text at the top
     textAlign: "center", // Center align the text horizontally
+    borderWidth: 1,
+    paddingVertical: 10,
+    borderRadius: 15,
+  
   },
   title: {
     alignItems: "center",
@@ -219,6 +226,7 @@ const styles = StyleSheet.create({
     margin: 30,
     height: "30%",
     backgroundColor: "#fff",
+    borderRadius: 25,
   },
   slider: { width: 200, height: "15%", marginBottom: 16, alignSelf: "center" },
   image: {
@@ -226,18 +234,24 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined,
     backgroundColor: "#36d346",
-    contentFit: "contain",
+    borderRadius: 25,
+    borderWidth: 5,
+    borderColor: "grey",
+    // contentFit: "contain",
   },
   error: {
     color: "#f44336",
   },
   submitButton: {
     backgroundColor: "#fff68f",
-    padding: 8,
+    padding: 10,
     borderRadius: 25,
-    alignSelf: "center",
     width: "67%",
-    marginBottom: 16,
+    alignSelf: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.4,
+    elevation: 2,
   },
   buttonText: {
     color: "#492c03",

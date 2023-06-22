@@ -40,13 +40,11 @@ export default function ResourceComments({ resource_id }) {
   }, []);
 
   const deleteComment = (comment_id) => {
-    removeComment(comment_id).catch((err) => {
-      // console.log(err)
-    });
+    removeComment(comment_id)
   };
 
   const renderItem = ({ item }) => {
-    // console.log(item)
+  
     return (
       <View style={styles.comment}>
         <Text style={styles.commentText}>User: {item.username}</Text>
