@@ -87,7 +87,7 @@ export const removeComment = (comment_id) => {
 
 export const dateFormatter = (date) => {
   const newDate = new Date(+date);
-  const options = { timeStyle: "short" };
+  const options = { timeStyle: "short", dateStyle: "short" };
   const formattedDate = newDate.toLocaleString("en-GB", options);
   return formattedDate;
 };
