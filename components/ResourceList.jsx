@@ -74,17 +74,18 @@ export default function ResourceList({
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       {resources.length === 0 ? (
-        <Text style={(marginTop = 160)}>
-          No resources found from search criteria
-        </Text>
+        <View style={styles.emptyContainer}>
+          <Text style={styles.infoText}>
+            No resources found from search criteria
+          </Text>
+        </View>
       ) : (
         <FlatList
-          data={sortedResources}
+          data={resources}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
-          vertical
         />
       )}
     </View>
@@ -92,6 +93,20 @@ export default function ResourceList({
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  infoText: {
+    fontSize: 15,
+    textAlign: "center",
+  },
   card: {
     width: "90%",
     marginTop: 25,

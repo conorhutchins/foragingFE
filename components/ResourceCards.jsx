@@ -100,9 +100,13 @@ export default function ResourceCards({
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       {resourcesLength === 0 ? (
-        <Text>No resources found from search criteria</Text>
+        <View style={styles.emptyContainer}>
+          <Text style={styles.infoText}>
+            No resources found from search criteria
+          </Text>
+        </View>
       ) : (
         <FlatList
           data={resources}
@@ -116,6 +120,18 @@ export default function ResourceCards({
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 200,
+    height: 200,
+    margin: 10,
+    borderRadius: 20,
+  },
   title: {
     textAlign: "center",
     fontSize: 22,
