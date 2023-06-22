@@ -23,12 +23,12 @@ export default function MapPage({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   // const [userLocation, setUserLocation] = useState({
-  //   longitude: -2.23817336417579, 
+  //   longitude: -2.23817336417579,
   //   latitude: 53.47221030598573
   // });
   const [targetLocation, setTargetLocation] = useState({
-    longitude: -2.23817336417579, 
-    latitude: 53.47221030598573
+    longitude: -2.23817336417579,
+    latitude: 53.47221030598573,
   });
   const [showSearch, setShowSearch] = useState(false);
   const { displayedResources, setDisplayedResources } =
@@ -64,14 +64,12 @@ export default function MapPage({ navigation }) {
     setTargetLocation(location);
   };
 
-  const containerStyles = toggleValue
-    ? styles.listContainer
-    : styles.container;
-  
+  const containerStyles = toggleValue ? styles.listContainer : styles.container;
+
   if (loading) {
     return (
       // <View style={styles.container}>
-      <LoadingComponent/>
+      <LoadingComponent />
       // </View>
     );
   }
@@ -86,24 +84,27 @@ export default function MapPage({ navigation }) {
   }
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "#fff68f"}}
+      style={{ flex: 1, backgroundColor: "#fff68f" }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
-      
       <View style={containerStyles}>
         {toggleValue ? (
           <ResourceList
             resources={displayedResources}
             navigation={navigation}
             location={targetLocation}
-            userLocation={{ longitude: -2.23817336417579, 
-              latitude: 53.47221030598573}}
+            userLocation={{
+              longitude: -2.23817336417579,
+              latitude: 53.47221030598573,
+            }}
           />
         ) : (
           <Map
-            initialRegion={{ longitude: -2.23817336417579, 
-              latitude: 53.47221030598573}}
+            initialRegion={{
+              longitude: -2.23817336417579,
+              latitude: 53.47221030598573,
+            }}
             targetLocation={targetLocation}
             displayedResources={displayedResources}
             navigation={navigation}
@@ -117,15 +118,23 @@ export default function MapPage({ navigation }) {
           setToggleValue={setToggleValue}
         />
         {showSearch ? (
-          <SearchBox setShowSearch={setShowSearch} />
+          <SearchBox
+            userLocation={{
+              longitude: -2.23817336417579,
+              latitude: 53.47221030598573,
+            }}
+            setShowSearch={setShowSearch}
+          />
         ) : !toggleValue ? (
           <ResourceCards
             resources={displayedResources}
             cardPress={cardPress}
             navigation={navigation}
             location={targetLocation}
-            userLocation={{ longitude: -2.23817336417579, 
-              latitude: 53.47221030598573}}
+            userLocation={{
+              longitude: -2.23817336417579,
+              latitude: 53.47221030598573,
+            }}
           />
         ) : null}
       </View>
