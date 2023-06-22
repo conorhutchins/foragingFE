@@ -1,5 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Image } from "expo-image";
+import React, { useState, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -8,21 +7,23 @@ import {
   Button,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import { postResource } from "../utils/utils";
-import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { ResourcesContext } from "../contexts/ResourcesContext";
 import BackButton from "../components/BackButton";
 import { fetchItems } from "../utils/utils";
+import { Formik } from "formik";
 
 export const AddNewResource = ({ route, navigation }) => {
   const [submitError, setSubmitError] = useState(null);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
-  const { setDisplayedResources} = useContext(ResourcesContext);
+  const { setDisplayedResources } = useContext(ResourcesContext);
 
   const abundanceValues = ["depleted", "low", "medium", "high", "abundant"];
   const { image, location } = route.params;
@@ -59,7 +60,6 @@ export const AddNewResource = ({ route, navigation }) => {
     condition,
     depletion,
   }) => {
-
     const formData = new FormData();
     formData.append("image", {
       uri: image.uri,
@@ -74,27 +74,20 @@ export const AddNewResource = ({ route, navigation }) => {
     formData.append("latitude", location.coords.latitude);
     formData.append("longitude", location.coords.longitude);
     formData.append("created_at", new Date(location.timestamp).toUTCString());
-    postResource(formData).then(()=>{
-      return fetchItems()
-      
-    }).then((Items)=>{
-      setDisplayedResources(Items)
-      navigation.navigate("MapPage")
-    }).catch(() => {
-      setSubmitError(
-        "Sorry resource was not submitted, please restart the app and try again!"
-      );
-    })
-
+    postResource(formData)
+      .then(() => {
+        return fetchItems();
+      })
+      .then((Items) => {
+        setDisplayedResources(Items);
+        navigation.navigate("MapPage");
+      })
+      .catch(() => {
+        setSubmitError(
+          "Sorry resource was not submitted, please restart the app and try again!"
+        );
+      });
   };
-
-  // const validateValues = (values) => {
-  //   const errors = {};
-  //   if (!values.resource_name || !values.description) {
-  //     errors.resource_name = "This is a required field";
-  //   }
-  //   return errors;
-  // };
 
   return (
     <View style={styles.container}>
@@ -114,14 +107,13 @@ export const AddNewResource = ({ route, navigation }) => {
             depletion: 0,
           }}
           onSubmit={handleSubmit}
-          // validate={validateValues}
         >
           {({ handleChange, handleSubmit, values, setFieldValue }) => (
             <>
               {touched.resource_name && errors.resource_name && (
                 <Text style={styles.error}>{errors.resource_name}</Text>
               )}
-              <Text>Name of Forageable resource</Text>
+              <Text style={styles.inputLabel}>Name of Forageable resource</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Name"
@@ -132,7 +124,7 @@ export const AddNewResource = ({ route, navigation }) => {
               {touched.description && errors.description && (
                 <Text style={styles.error}>{errors.description}</Text>
               )}
-              <Text>Notes about the Forageable resource</Text>
+              <Text style={styles.inputLabel}>Notes about the Forageable resource</Text>
               <TextInput
                 style={styles.notes_input}
                 placeholder="Notes"
@@ -143,7 +135,7 @@ export const AddNewResource = ({ route, navigation }) => {
               {touched.condition && errors.condition && (
                 <Text style={styles.error}>{errors.condition}</Text>
               )}
-              <Text>Quality: {values.condition}%</Text>
+              <Text style={styles.inputLabel}>Quality: {values.condition}%</Text>
               <Slider
                 style={styles.slider}
                 value={values.condition}
@@ -152,13 +144,12 @@ export const AddNewResource = ({ route, navigation }) => {
                 onValueChange={(value) => {
                   setFieldValue("condition", value);
                 }}
-                // onSlidingComplete={()=> handleSlidersBlur("condition", values)}
                 step={1}
               />
               {touched.depletion && errors.depletion && (
                 <Text style={styles.error}>{errors.depletion}</Text>
               )}
-              <Text>Abundance: {abundanceValues[values.depletion]}</Text>
+              <Text style={styles.inputLabel}>Abundance: {abundanceValues[values.depletion]}</Text>
               <Slider
                 style={styles.slider}
                 value={values.depletion}
@@ -167,15 +158,16 @@ export const AddNewResource = ({ route, navigation }) => {
                 onValueChange={(value) => {
                   setFieldValue("depletion", value);
                 }}
-                // onSlidingComplete={()=> handleSlidersBlur("depletion", values)}
                 step={1}
               />
               {submitError && <Text style={styles.error}>{submitError}</Text>}
-              <Button
+              <TouchableOpacity
+                style={styles.submitButton}
                 onPress={handleSubmit}
-                title="Submit"
                 disabled={!values.resource_name || !values.description}
-              />
+              >
+                <Text style={styles.buttonText}>Submit</Text>
+              </TouchableOpacity>
             </>
           )}
         </Formik>
@@ -183,24 +175,32 @@ export const AddNewResource = ({ route, navigation }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
+    backgroundColor: "#36d346",
   },
   input: {
-    height: "10%",
-    borderColor: "gray",
-    borderWidth: 1,
+    height: 50,
+    borderColor: "#9f3c41",
+    borderWidth: 2,
     marginBottom: 16,
     paddingHorizontal: 8,
+    backgroundColor: "#ebf1ff",
+    textAlign: "center", // Center align the text horizontally
   },
   notes_input: {
-    height: "20%",
+    height: 100,
     borderColor: "gray",
-    borderWidth: 1,
+    backgroundColor: "#ebf1ff",
+    borderColor: "#9f3c41",
+    borderWidth: 2,
     marginBottom: 16,
     paddingHorizontal: 8,
+    textAlignVertical: "top", // Align the text at the top
+    textAlign: "center", // Center align the text horizontally
   },
   title: {
     alignItems: "center",
@@ -220,15 +220,34 @@ const styles = StyleSheet.create({
     height: "30%",
     backgroundColor: "#fff",
   },
-  slider: { width: 200, height: "15%" },
+  slider: { width: 200, height: "15%", marginBottom: 16, alignSelf: "center" },
   image: {
     flex: 1,
     width: undefined,
     height: undefined,
-    backgroundColor: "#0553",
+    backgroundColor: "#36d346",
     contentFit: "contain",
   },
   error: {
     color: "#f44336",
+  },
+  submitButton: {
+    backgroundColor: "#fff68f",
+    padding: 8,
+    borderRadius: 25,
+    alignSelf: "center",
+    width: "67%",
+    marginBottom: 16,
+  },
+  buttonText: {
+    color: "#492c03",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  inputLabel: {
+    textAlign: "center",
+    marginBottom: 8,
+    fontWeight: "bold",
   },
 });

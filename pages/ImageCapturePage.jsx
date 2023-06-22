@@ -65,7 +65,7 @@ export const ImageCapturePage = ({ navigation }) => {
   : styles.disabledButtonText;
 
   if (loading) {
-    return <LoadingComponent size='large' color='#0000ff' />;
+    return <LoadingComponent size='large' />;
   }
 
   return (
