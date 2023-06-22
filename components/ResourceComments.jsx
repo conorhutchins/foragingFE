@@ -9,7 +9,12 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { fetchCommentsByResourceId, postComment, removeComment } from "../utils/utils";
+import {
+  dateFormatter,
+  fetchCommentsByResourceId,
+  postComment,
+  removeComment,
+} from "../utils/utils";
 import { Formik } from "formik";
 import { UserContext } from "../contexts/UserContext";
 import LoadingComponent from "../components/LoadingComponent";
@@ -37,8 +42,8 @@ export default function ResourceComments({ resource_id }) {
   const deleteComment = (comment_id) => {
     removeComment(comment_id).catch((err) => {
       // console.log(err)
-    })
-  }
+    });
+  };
 
   const renderItem = ({ item }) => {
     // console.log(item)
@@ -46,7 +51,9 @@ export default function ResourceComments({ resource_id }) {
       <View style={styles.comment}>
         <Text style={styles.commentText}>User: {item.username}</Text>
         <Text style={styles.comment_body}>Comment: {item.comment_body}</Text>
-        <Text style={styles.commentDate}>Date commented: {item.created_at}</Text>
+        <Text style={styles.commentDate}>
+          Date commented: {dateFormatter(item.created_at)}
+        s</Text>
         {user === item.username && (
           <TouchableOpacity
             onPress={() => deleteComment(item.comment_id)}

@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { Image } from "expo-image";
 import Nav from "../components/Nav";
 import ResourceComments from "../components/ResourceComments";
+import { dateFormatter } from "../utils/utils";
 
 export const ResourcePage = ({ navigation, route }) => {
-
   const { resource } = route.params;
 
   return (
@@ -27,7 +33,6 @@ export const ResourcePage = ({ navigation, route }) => {
           <Image
             style={styles.image}
             source={resource.img_url}
-            // placeholder={blurhash}
             contentFit="scale-down"
             transition={1000}
           />
