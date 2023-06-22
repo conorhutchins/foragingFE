@@ -16,9 +16,9 @@ export const ResourcePage = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
+    style={{ flex: 1, backgroundColor: "#fff68f" }}
+    behavior={Platform.OS === "ios" ? "padding" : undefined}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0} // Adjust this offset if needed
     >
       <View style={styles.container}>
         <View style={styles.info}>
