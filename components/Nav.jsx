@@ -4,6 +4,7 @@ import { ResourcesContext } from "../contexts/ResourcesContext";
 import { useRoute } from "@react-navigation/native";
 
 export default function Nav({
+  showSearch,
   setShowSearch,
   showResourceNav = false,
   showSearchButton = true,
@@ -36,6 +37,7 @@ export default function Nav({
   };
 
   const backToMapPress = () => {
+    setShowSearch(false);
     navigation.navigate("MapPage");
   };
 
@@ -70,7 +72,7 @@ export default function Nav({
         </View>
       )}
       <View style={styles.container}>
-        {showSearchButton && (
+        {showSearchButton && !showSearch && (
           <Button
             onPress={searchPress}
             title="Search"
@@ -78,7 +80,7 @@ export default function Nav({
             accessibilityLabel="search"
           />
         )}
-        {!showSearchButton && (
+        {showSearch && (
           <Button
             onPress={backToMapPress}
             title="Back To Map"
@@ -97,13 +99,10 @@ export default function Nav({
           color="#841584"
           accessibilityLabel="catalogue"
         /> */}
-       {route.name === "MapPage" && (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text>{toggleValue ? 'List' : 'Map'}</Text>
-            <Switch
-              value={toggleValue}
-              onValueChange={setToggleValue}
-            />
+        {route.name === "MapPage" && (
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text>{toggleValue ? "List" : "Map"}</Text>
+            <Switch value={toggleValue} onValueChange={setToggleValue} />
           </View>
         )}
       </View>

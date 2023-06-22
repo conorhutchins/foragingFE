@@ -19,7 +19,7 @@ export default function ResourceCards({
   const viewResourceButtonPress = (resource) => {
     navigation.navigate("ResourcePage", { resource: resource });
   };
-
+  const resourcesLength = resources.length;
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const radius = 6371;
 
@@ -100,16 +100,38 @@ export default function ResourceCards({
   };
 
   return (
-    <FlatList
-      data={resources}
-      renderItem={renderItem}
-      keyExtractor={(item, index) => index.toString()}
-      horizontal
-    />
+    <View style={styles.container}>
+      {resourcesLength === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.infoText}>
+            No resources found from search criteria
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={resources}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+        />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 200,
+    height: 200,
+    margin: 10,
+    borderRadius: 20,
+  },
   title: {
     textAlign: "center",
     fontSize: 22,
