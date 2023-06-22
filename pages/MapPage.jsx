@@ -91,6 +91,7 @@ export default function MapPage({ navigation }) {
       <View style={containerStyles}>
         {toggleValue ? (
           <ResourceList
+            setShowSearch={setShowSearch}
             resources={displayedResources}
             navigation={navigation}
             location={targetLocation}
@@ -101,6 +102,7 @@ export default function MapPage({ navigation }) {
           />
         ) : (
           <Map
+            setShowSearch={setShowSearch}
             initialRegion={{
               longitude: -2.23817336417579,
               latitude: 53.47221030598573,
@@ -128,6 +130,7 @@ export default function MapPage({ navigation }) {
           />
         ) : !toggleValue ? (
           <ResourceCards
+            setShowSearch={setShowSearch}
             resources={displayedResources}
             cardPress={cardPress}
             navigation={navigation}

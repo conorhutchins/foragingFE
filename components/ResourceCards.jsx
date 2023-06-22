@@ -10,6 +10,7 @@ import { getDistance } from "geolib";
 import { dateFormatter } from "../utils/utils";
 
 export default function ResourceCards({
+  setShowSearch,
   cardPress,
   resources,
   navigation,
@@ -17,6 +18,7 @@ export default function ResourceCards({
   userLocation,
 }) {
   const viewResourceButtonPress = (resource) => {
+    setShowSearch = false;
     navigation.navigate("ResourcePage", { resource: resource });
   };
   const resourcesLength = resources.length;

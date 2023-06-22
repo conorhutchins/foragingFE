@@ -1,8 +1,14 @@
 import MapView, { Marker, Callout } from "react-native-maps";
 import { StyleSheet, View, Linking, Text } from "react-native";
 
-export default function Map({ targetLocation, displayedResources, navigation }) {
+export default function Map({
+  targetLocation,
+  displayedResources,
+  navigation,
+  setShowSearch,
+}) {
   const viewResourceButtonPress = (resource) => {
+    setShowSearch = false;
     navigation.navigate("ResourcePage", { resource: resource });
   };
 
@@ -24,7 +30,7 @@ export default function Map({ targetLocation, displayedResources, navigation }) 
             description={resource.description}
           >
             <Callout>
-            <View style={styles.markerPopup}>
+              <View style={styles.markerPopup}>
                 <Text>{resource.resource_name}</Text>
                 <Text>{resource.description}</Text>
                 <Text
@@ -77,11 +83,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   markerPopup: {
-      width: 200,  // Adjust the width to your desired size
-      height: 50, // Adjust the height to your desired size
-      backgroundColor: 'white',
-      borderRadius: 5,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
+    width: 200, // Adjust the width to your desired size
+    height: 50, // Adjust the height to your desired size
+    backgroundColor: "white",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

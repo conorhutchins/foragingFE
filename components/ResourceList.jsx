@@ -10,12 +10,14 @@ import { getDistance } from "geolib";
 import { dateFormatter } from "../utils/utils";
 
 export default function ResourceList({
+  setShowSearch,
   resources,
   navigation,
   location,
   userLocation,
 }) {
   const viewResourceButtonPress = (resource) => {
+    setShowSearch = false;
     navigation.navigate("ResourcePage", { resource: resource });
   };
 
