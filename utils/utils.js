@@ -15,7 +15,6 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 export const fetchItems = (params) => {
-  console.log(params?.sort_by);
   return foragingAPI.get("/api/resources").then((data) => {
     const resources = data.data.spots.Items;
     let filteredResources = [...resources];

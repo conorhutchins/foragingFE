@@ -27,8 +27,8 @@ export default function MapPage({ navigation }) {
   //   latitude: 53.47221030598573
   // });
   const [targetLocation, setTargetLocation] = useState({
-    longitude: -2.23817336417579,
-    latitude: 53.47221030598573,
+    longitude: -2.5828239020837502,
+    latitude: 51.15901120333343,
   });
   const [showSearch, setShowSearch] = useState(false);
   const { displayedResources, setDisplayedResources } =
@@ -112,6 +112,7 @@ export default function MapPage({ navigation }) {
         )}
 
         <Nav
+          showSearch={showSearch}
           setShowSearch={setShowSearch}
           navigation={navigation}
           toggleValue={toggleValue}

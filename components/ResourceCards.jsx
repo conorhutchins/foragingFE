@@ -19,7 +19,7 @@ export default function ResourceCards({
   const viewResourceButtonPress = (resource) => {
     navigation.navigate("ResourcePage", { resource: resource });
   };
-
+  const resourcesLength = resources.length;
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const radius = 6371;
 
@@ -100,12 +100,18 @@ export default function ResourceCards({
   };
 
   return (
-    <FlatList
-      data={resources}
-      renderItem={renderItem}
-      keyExtractor={(item, index) => index.toString()}
-      horizontal
-    />
+    <View>
+      {resourcesLength === 0 ? (
+        <Text>No resources found from search criteria</Text>
+      ) : (
+        <FlatList
+          data={resources}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+        />
+      )}
+    </View>
   );
 }
 

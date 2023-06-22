@@ -37,12 +37,10 @@ export default function ResourceComments({ resource_id }) {
         setError(error.message);
         setLoading(false);
       });
-  }, []);
+  }, [resource_id]);
 
   const deleteComment = (comment_id) => {
-    removeComment(comment_id).catch((err) => {
-      // console.log(err)
-    });
+    removeComment(comment_id).catch((err) => {});
   };
 
   const renderItem = ({ item }) => {
@@ -52,8 +50,8 @@ export default function ResourceComments({ resource_id }) {
         <Text style={styles.commentText}>User: {item.username}</Text>
         <Text style={styles.comment_body}>Comment: {item.comment_body}</Text>
         <Text style={styles.commentDate}>
-          Date commented: {dateFormatter(item.created_at)}
-        s</Text>
+          Date commented: {dateFormatter(item.created_at)}s
+        </Text>
         {user === item.username && (
           <TouchableOpacity
             onPress={() => deleteComment(item.comment_id)}
@@ -79,8 +77,8 @@ export default function ResourceComments({ resource_id }) {
     const formData = {
       resource_id: resource_id,
       comment_body: values.comment_body,
-      username: user
-    }
+      username: user,
+    };
 
     postComment(resource_id, formData).catch(() => {
       setComments((currentComments) => {

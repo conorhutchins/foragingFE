@@ -17,8 +17,8 @@ export const ResourcePage = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // Adjust this offset if needed
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0} // Adjust this offset if needed
     >
       <View style={styles.container}>
         <View style={styles.info}>
@@ -26,8 +26,12 @@ export const ResourcePage = ({ navigation, route }) => {
           <Text style={styles.infoDescription}> {resource.description}</Text>
           <Text style={styles.infoAuthor}>Added by: {resource.username}</Text>
           <Text style={styles.infoQuality}>Quality: {resource.condition}%</Text>
-          <Text style={styles.infoDate}>Date Uploaded: {resource.created_at}</Text>
-          <Text style={styles.infoAbundance}>Abundance: {resource.depletion}%</Text>
+          <Text style={styles.infoDate}>
+            Date Uploaded: {dateFormatter(resource.created_at)}
+          </Text>
+          <Text style={styles.infoAbundance}>
+            Abundance: {resource.depletion}%
+          </Text>
         </View>
         <View style={styles.imageContainer}>
           <Image
@@ -68,39 +72,34 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "#492c03", 
+    color: "#492c03",
     textAlign: "center",
   },
   infoDescription: {
     fontSize: 16,
-    color: "#492c03", 
+    color: "#492c03",
     textAlign: "center",
-
   },
   infoAuthor: {
     fontSize: 15,
-    color: "#492c03", 
+    color: "#492c03",
     marginBottom: 5,
     textAlign: "center",
-
   },
   infoQuality: {
     fontSize: 15,
-    color: "#492c03", 
+    color: "#492c03",
     textAlign: "center",
-
   },
   infoDate: {
     fontSize: 15,
     color: "#492c03",
     textAlign: "center",
-
   },
   infoAbundance: {
     fontSize: 15,
-    color: "#492c03", 
+    color: "#492c03",
     textAlign: "center",
-
   },
   imageContainer: {
     height: "38%",
@@ -113,8 +112,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff68f",
     resizeMode: "cover",
   },
-  comments:{
+  comments: {
     height: "50%",
     width: "100%",
-  }
+  },
 });

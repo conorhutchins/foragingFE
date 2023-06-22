@@ -75,12 +75,18 @@ export default function ResourceList({
 
   return (
     <View>
-      <FlatList
-        data={sortedResources}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        vertical
-      />
+      {resources.length === 0 ? (
+        <Text style={(marginTop = 160)}>
+          No resources found from search criteria
+        </Text>
+      ) : (
+        <FlatList
+          data={sortedResources}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          vertical
+        />
+      )}
     </View>
   );
 }
