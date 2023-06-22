@@ -22,9 +22,12 @@ export const ResourcePage = ({ navigation, route }) => {
     >
       <View style={styles.container}>
         <View style={styles.info}>
+          <View>
+            
+          </View>
           <Text style={styles.infoTitle}>{resource.resource_name}</Text>
           <Text style={styles.infoDescription}> {resource.description}</Text>
-          <Text style={styles.infoAuthor}>Added by: {resource.username}</Text>
+          <Text style={styles.infoAuthor}>@ {resource.username}</Text>
           <Text style={styles.infoQuality}>Quality: {resource.condition}%</Text>
           <Text style={styles.infoDate}>Date Uploaded: {resource.created_at}</Text>
           <Text style={styles.infoAbundance}>Abundance: {resource.depletion}%</Text>
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
   },
   infoTitle: {
     marginTop: 10,
-    fontSize: 22,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 10,
     color: "#492c03", 
