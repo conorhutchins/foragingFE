@@ -90,9 +90,9 @@ export default function ResourceComments({ resource_id }) {
     postComment(resource_id, formData)
       .then((response) => {
         // Comment successfully posted
-        const updatedComments = [...comments]; // Get a copy of the comments array
+        const updatedComments = [...comments]; 
         const index = updatedComments.findIndex(comment => comment.comment_id === optimisticComment.comment_id);
-        updatedComments[index] = response.comment; // Replace the optimistic comment with the actual response from the server
+        updatedComments[index] = response.comment; 
         setComments(updatedComments);
       })
       .catch((error) => {
