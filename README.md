@@ -38,6 +38,3 @@ The location of a resource is determined from the location data attached to the 
 
 Contributions are welcome! If you have a feature request, bug report, or proposal for code refactoring, please open a new issue on this repository. If you wish to contribute code, please fork the repository, make your changes, and open a pull request.
 
-## License
-
-This project is currently unlicensed, which means that you do not have permission to reproduce, distribute, or create derivative works from this project. If you wish to use this code, please contact the repository owner.
